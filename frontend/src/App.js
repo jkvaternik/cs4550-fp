@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import './api';
+import { api_login } from './api';
 
 import './App.css';
 
@@ -21,6 +23,10 @@ window.location.hash = "";
 
 function App() {
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState({
+    name: "",
+    password: ""
+  })
 
   useEffect(
     () => {
@@ -32,14 +38,31 @@ function App() {
     }, [])
 
   console.log(token);
+
   return (
     <div className="App">
       {token ?
         <p>Logged In</p>
         :
-        <a href={`${authEndPoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}>
-          Login
-      </a>}
+        <div>
+        <input 
+          type = "text"
+          value = {user.name}
+          onChange = {(ev) => setUser({...user, name: ev.target.value})}
+          placeholder = "Username"
+        />
+        <input 
+          type = "password"
+          value = {user.password}
+          onChange = {(ev) => setUser({...user, password: ev.target.value})}
+          placeholder = "Password"
+        />
+        <button onClick={api_login(user.name, user.password)}>Login</button>
+        </div>
+      //   <a href={`${authEndPoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}>
+      //     Login
+      // </a>
+      }
     </div>
   );
 }

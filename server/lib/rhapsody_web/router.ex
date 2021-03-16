@@ -7,6 +7,8 @@ defmodule RhapsodyWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+
+    plug RhapsodyWeb.Plugs.FetchSession
   end
 
   pipeline :api do
@@ -20,9 +22,14 @@ defmodule RhapsodyWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", RhapsodyWeb do
-  #   pipe_through :api
-  # end
+  scope "/api/v1", RhapsodyWeb do
+    pipe_through :api
+
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/tracks", TrackController, except: [:new, :edit]
+    resources "/sessions", SessionController,
+      only: [:create, :delete], singleton: true
+  end
 
   # Enables LiveDashboard only for development
   #
