@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :rhapsody, Rhapsody.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "rhapsody",
+  password: "ohGae8biet8j",
   database: "rhapsody_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
