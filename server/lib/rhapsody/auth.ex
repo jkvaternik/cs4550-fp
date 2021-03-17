@@ -15,9 +15,7 @@ defmodule Rhapsody.Auth do
   ]
 
   def new do
-    Application.get_env(:rhapsody, __MODULE__)
-    |> Keyword.merge(@config)
-    |> OAuth2.Client.new()
+    OAuth2.Client.new(@config)
   end
 
   def new(token) do
