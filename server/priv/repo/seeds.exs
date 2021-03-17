@@ -9,3 +9,8 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Rhapsody.Repo
+alias Rhapsody.Users.User
+
+jim = Repo.insert!(%User{name: "jim", password_hash: "password"})

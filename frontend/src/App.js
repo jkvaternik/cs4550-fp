@@ -37,8 +37,6 @@ function App() {
       }
     }, [])
 
-  console.log(token);
-
   return (
     <div className="App">
       {token ?
@@ -57,11 +55,12 @@ function App() {
           onChange = {(ev) => setUser({...user, password: ev.target.value})}
           placeholder = "Password"
         />
-        <button onClick={api_login(user.name, user.password)}>Login</button>
+        <button onClick={() => api_login(user.name, user.password)}>Login</button>
+        <a href={`${authEndPoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}>
+          Login with Spotify
+        </a>
         </div>
-      //   <a href={`${authEndPoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}>
-      //     Login
-      // </a>
+      
       }
     </div>
   );
