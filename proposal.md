@@ -79,7 +79,7 @@ be displayed in the web application.
 ## Experiments:
 
 ### Experiment 1. 
-** Using Oauth2 to authenticate users through the Spotify API: **
+**Using Oauth2 to authenticate users through the Spotify API:**
 
 For our first experiment, we worked on allowing users to sign in and
 authenticate with their Spotify accounts. Spotify’s API uses an OAuth2
@@ -121,8 +121,8 @@ next week in lecture. This fix was created to proceed and test our API
 in our other experiments.
 
 ### Experiment 2: 
-** Pulling a list of a users top songs with the “user-top-read” 
-endpoint: **
+**Pulling a list of a users top songs with the “user-top-read” 
+endpoint:**
 
 In our second experiment, we tested out a piece of the core
 functionality for our app, pulling users top songs from their Spotify
@@ -152,8 +152,8 @@ Spotify API for pulling user top tracks, as well as more advanced
 requests that we may need to do.
 
 ### Experiment 3: 
-** Pulling a list of song recommendations based on tracks, artists, or 
-genres: **
+**Pulling a list of song recommendations based on tracks, artists, or 
+genres:**
 
 To expand on our previous experiment, we decided to try out a few more
 gets from Spotify. We figured getting recommendations would be a good
