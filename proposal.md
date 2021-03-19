@@ -136,7 +136,8 @@ number of entities returned, and an offset.
 This experiment was a success! One of our group members (Jaime) was
 able to authenticate to his own Spotify account, and then make an API
 request to receive his top five tracks. We were able to then parse the
-Json response and print out the names of the songs in a list.
+JSON response and print out the names of the songs in a list on Elixir
+terminal.
 
 This experiment showed us that our core idea of pulling top songs from
 users and then using them for future work is possible, and showed us
@@ -178,9 +179,10 @@ could easily identify and use these parameters in the future.
 
 We consider this experiment a great success! We learned how to
 effectively communicate with Spotify’s API and extract the exact
-information we needed. We tested the “Get recommendation”functionality
+information we needed. We tested the `get_recommendation` functionality
 by seeding the request with both the song IDs that we pulled in
-Experiment 2, as well as genres. This allowed us to confirm that we
+Experiment 2, as well as genres from Spotify's list of available genres 
+through `get_recommendation_genres`. This allowed us to confirm that we
 will be able to combine the different types of seeds to get the kind
 of tailored recommendations that we will need in order to produce
 playlists in the way we want. We also investigated the documentation
@@ -211,11 +213,11 @@ username (or vice versa), and invites her to join his Rhapsody group
 a group together, either one of them can choose a genre for the
 playlist they want to create, like “happy”, “pop”, “guitar”, or
 “detroit techno”. Rhapsody will then choose songs that best match the
-chosen genre from Alice and Joe’s ‘most popular songs’, and create one
-playlist of a specified length. They then have the option of copying
-this playlist back down to their own Spotify libraries, and sharing it
-with friends! More users can join the group at any time and decide to
-re-create the group playlist, now using the new user(s) top songs as
-well. The group owner can decide to disband the group at any time.
-Groups will stick around for as long as users want.
+chosen genre as well as Alice and Joe’s ‘most popular songs’, and 
+create one playlist of a specified length. They then have the option of 
+copying this playlist back down to their own Spotify libraries, and 
+sharing it with friends! More users can join the group at any time and 
+decide to re-create the group playlist, now using the new user(s) top 
+songs as well. The group owner can decide to disband the group at 
+any time. Groups will stick around for as long as users want.
 
