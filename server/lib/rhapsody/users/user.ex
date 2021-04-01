@@ -3,6 +3,7 @@ defmodule Rhapsody.Users.User do
   import Ecto.Changeset
 
   schema "users" do
+    field :email, :string
     field :name, :string
     field :password_hash, :string
 
@@ -12,7 +13,7 @@ defmodule Rhapsody.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :password_hash])
-    |> validate_required([:name, :password_hash])
+    |> cast(attrs, [:name, :email, :password_hash])
+    |> validate_required([:name, :email, :password_hash])
   end
 end
