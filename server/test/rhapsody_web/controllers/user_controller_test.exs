@@ -5,14 +5,16 @@ defmodule RhapsodyWeb.UserControllerTest do
   alias Rhapsody.Users.User
 
   @create_attrs %{
+    email: "some email",
     name: "some name",
     password_hash: "some password_hash"
   }
   @update_attrs %{
+    email: "some updated email",
     name: "some updated name",
     password_hash: "some updated password_hash"
   }
-  @invalid_attrs %{name: nil, password_hash: nil}
+  @invalid_attrs %{email: nil, name: nil, password_hash: nil}
 
   def fixture(:user) do
     {:ok, user} = Users.create_user(@create_attrs)
@@ -39,6 +41,7 @@ defmodule RhapsodyWeb.UserControllerTest do
 
       assert %{
                "id" => id,
+               "email" => "some email",
                "name" => "some name",
                "password_hash" => "some password_hash"
              } = json_response(conn, 200)["data"]
@@ -61,6 +64,7 @@ defmodule RhapsodyWeb.UserControllerTest do
 
       assert %{
                "id" => id,
+               "email" => "some updated email",
                "name" => "some updated name",
                "password_hash" => "some updated password_hash"
              } = json_response(conn, 200)["data"]
