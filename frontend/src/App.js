@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './api';
+import WaitingRoom from './waitingRoom'
 import { api_login } from './api';
 
 import './App.css';
@@ -38,34 +39,35 @@ function App() {
     }, [])
 
   return (
-    <div className="App">
-      {token ?
-        <div>
-          <p>Access Token:</p>
-          <p>{token}</p>
-        </div>
-        :
-        <div>
-        {/* <input 
-          type = "text"
-          value = {user.name}
-          onChange = {(ev) => setUser({...user, name: ev.target.value})}
-          placeholder = "Username"
-        />
-        <input 
-          type = "password"
-          value = {user.password}
-          onChange = {(ev) => setUser({...user, password: ev.target.value})}
-          placeholder = "Password"
-        />
-        <button onClick={() => api_login(user.name, user.password)}>Login</button> */}
-        <a href={`${authEndPoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}>
-          Login with Spotify
-        </a>
-        </div>
+    // <div className="App">
+    //   {token ?
+    //     <div>
+    //       <p>Access Token:</p>
+    //       <p>{token}</p>
+    //     </div>
+    //     :
+    //     <div>
+    //     {/* <input 
+    //       type = "text"
+    //       value = {user.name}
+    //       onChange = {(ev) => setUser({...user, name: ev.target.value})}
+    //       placeholder = "Username"
+    //     />
+    //     <input 
+    //       type = "password"
+    //       value = {user.password}
+    //       onChange = {(ev) => setUser({...user, password: ev.target.value})}
+    //       placeholder = "Password"
+    //     />
+    //     <button onClick={() => api_login(user.name, user.password)}>Login</button> */}
+    //     <a href={`${authEndPoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}>
+    //       Login with Spotify
+    //     </a>
+    //     </div>
       
-      }
-    </div>
+    //   }
+    // </div>
+    <WaitingRoom />
   );
 }
 
