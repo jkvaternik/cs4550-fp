@@ -1,34 +1,45 @@
 defmodule RhapsodyWeb.AuthController do
+  @moduledoc """
+  Auth controller responsible for handling Ueberauth responses
+  """
+
   use RhapsodyWeb, :controller
 
-  alias Rhapsody.Auth
+  plug Ueberauth
 
-  def authenticate(conn, _params) do
-    redirect conn, external: Auth.authorize_url!()
+  alias Ueberauth.Strategy.Helpers
+  alias Rhapsody.UserFromAuth
+
+  def request(conn, _params) do
+    render(conn, "request.html", callback_url: Helpers.callback_url(conn))
   end
 
   def delete(conn, _params) do
     conn
-    |> configure_session(drop: true)
     |> put_flash(:info, "You have been logged out!")
+    |> clear_session()
     |> redirect(to: "/")
   end
 
-  def callback(conn, %{"code" => code}) do
-    client = Auth.get_token!(code: code)
-    %{body: user} = OAuth2.Client.get!(client, "/user")
-
-    token = client.token
-    |> Map.drop([:__struct__, :__meta__])
-
-    {:ok, user} = Jason.decode!(user)
-    |> Map.put("token", token)
-    |> Rhapsody.Users.create_user()
-
-    IO.inspect(user)
-
+  def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
     conn
-    |> put_session(:user_id, user.id)
-    |> redirect(to: "/welcome")
+    |> put_flash(:error, "Failed to authenticate.")
+    |> redirect(to: "/")
+  end
+
+  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
+    case UserFromAuth.find_or_create(auth) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "Successfully authenticated.")
+        |> put_session(:current_user, user)
+        |> configure_session(renew: true)
+        |> redirect(to: "/")
+
+      {:error, reason} ->
+        conn
+        |> put_flash(:error, reason)
+        |> redirect(to: "/")
+    end
   end
 end

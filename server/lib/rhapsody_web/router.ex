@@ -31,6 +31,15 @@ defmodule RhapsodyWeb.Router do
       only: [:create, :delete], singleton: true
   end
 
+  scope "/auth", RhapsodyWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+    delete "/logout", AuthController, :delete
+  end
+
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put
