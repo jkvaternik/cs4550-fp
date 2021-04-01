@@ -4,7 +4,6 @@ defmodule Rhapsody.Comments.Comment do
 
   schema "comments" do
     field :body, :string
-    field :user_id, :id
     field :playlist_id, :id
 
     belongs_to :user, Rhapsody.Users.User

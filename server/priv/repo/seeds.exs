@@ -13,4 +13,4 @@
 alias Rhapsody.Repo
 alias Rhapsody.Users.User
 
-jim = Repo.insert!(%User{name: "jim", password_hash: "password"})
+jim = Repo.insert!(%User{name: "jim", email: "jim@gmail", password_hash: "password"})
