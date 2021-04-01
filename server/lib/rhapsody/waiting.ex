@@ -27,7 +27,7 @@ defmodule Rhapsody.Waiting do
         %{
         
         players_ready: players_ready,
-        game_started: game_started,
+        game_started: st.game_started,
 
         }
     end
@@ -35,8 +35,8 @@ defmodule Rhapsody.Waiting do
     def view(st) do
         %{
         
-        players_ready: players_ready,
-        game_started: game_started,
+        players_ready: st.players_ready,
+        game_started: st.game_started,
 
         }
     end
