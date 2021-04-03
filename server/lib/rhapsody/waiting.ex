@@ -40,6 +40,29 @@ defmodule Rhapsody.Waiting do
 
         }
     end
+
+    def takeThreeMostCommon(genres) do
+        listOfGenres = []
+
+        mapOfGenres = Enum.frequencies(genres)
+
+        amountOne = Enum.max_by(mapOfGenres, fn ({key, value}) -> value end)
+        IO.puts(amountOne)
+    end
+
+    defp randomSample(genres) do
+        listOfGenres = []
+        # listOfGenres ++ Enum.random(genres)
+        # listOfGenres ++ Enum.random(genres)
+        # listOfGenres ++ Enum.random(genres)
+
+        listOfGenres = Enum.take_random(genres, 3)
+
+        listOfGenres
+
+
+
+    end
 end
 
 
