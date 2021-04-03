@@ -43,25 +43,34 @@ defmodule Rhapsody.Waiting do
 
     def takeThreeMostCommon(genres) do
         listOfGenres = []
-
         mapOfGenres = Enum.frequencies(genres)
 
         amountOne = Enum.max_by(mapOfGenres, fn ({key, value}) -> value end)
-        IO.puts(amountOne)
+        val = Enum.at(Tuple.to_list(amountOne),0)
+        mapOfGenres = Map.delete(mapOfGenres, val)
+        listOfGenres = listOfGenres ++ [val]
+        IO.puts(val)
+
+        amountOne = Enum.max_by(mapOfGenres, fn ({key, value}) -> value end)
+        val = Enum.at(Tuple.to_list(amountOne),0)
+        mapOfGenres = Map.delete(mapOfGenres, val)
+        listOfGenres = listOfGenres ++ [val]
+        IO.puts(val)
+
+        amountOne = Enum.max_by(mapOfGenres, fn ({key, value}) -> value end)
+        val = Enum.at(Tuple.to_list(amountOne),0)
+        listOfGenres = listOfGenres ++ [val]
+        IO.puts(val)
+
+        listOfGenres
     end
 
-    defp randomSample(genres) do
+    def randomSample(genres) do
         listOfGenres = []
-        # listOfGenres ++ Enum.random(genres)
-        # listOfGenres ++ Enum.random(genres)
-        # listOfGenres ++ Enum.random(genres)
 
         listOfGenres = Enum.take_random(genres, 3)
 
         listOfGenres
-
-
-
     end
 end
 
