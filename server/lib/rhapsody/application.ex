@@ -14,9 +14,11 @@ defmodule Rhapsody.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Rhapsody.PubSub},
       # Start the Endpoint (http/https)
-      RhapsodyWeb.Endpoint
+      RhapsodyWeb.Endpoint,
       # Start a worker by calling: Rhapsody.Worker.start_link(arg)
       # {Rhapsody.Worker, arg}
+      Rhapsody.BackupAgent,
+      Rhapsody.RoomSup,
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

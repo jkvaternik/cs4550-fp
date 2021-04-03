@@ -1,18 +1,20 @@
 import { Socket } from "phoenix";
 
 let socket = new Socket(
-  "/socket",
+  "ws://localhost:4000/socket",
   { params: { token: "" } }
 );
 
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:a
-let channel = socket.channel(`game:lobby`, {}); 
+let channel = socket.channel(`room:1`, {}); 
+
 
 let state = {
-    ready: false,
-    users: [],
+    playlist_id: 1,
+    players_ready: {},
+    game_started: false,
     genres: [],
 };
 
@@ -31,17 +33,23 @@ export function ch_join(cb) {
   callback(state)
 }
 
-export function ch_waiting(user_id, playlist) {
-  channel = socket.channel(`playlist:${playlist}`, {});
+// export function ch_login(username, playlist_id) {
+//   //channel = socket.channel(`room:${playlist_id}`, {});
 
-  channel.join()
-    .receive("ok", state_update)
-    .receive("error", resp => {
-      console.log("Unable to join", resp)
-    })
+//   channel.join()
+//     .receive("ok", state_update)
+//     .receive("error", resp => {
+//       console.log("Unable to join", resp)
+//     })
 
-  channel.on("view", state_update);
-}
+//   channel.on("view", state_update);
+
+//   channel.push("login", username)
+//     .receive("ok", state_update)
+//     .receive("error", resp => {
+//       console.log("Unable to push", resp)
+//     });
+// }
 
 export function ch_genres(genres) {
   console.log(channel)
@@ -59,5 +67,21 @@ export function ch_ready() {
       console.log("Unable to push", resp)
     });
 }
+
+export function ch_notReady() {
+  channel.push("not_ready", {})
+    .receive("ok", state_update)
+    .receive("error", resp => {
+      console.log("Unable to push", resp)
+    });
+}
+
+channel.join()
+       .receive("ok", state_update)
+       .receive("error", resp => {
+         console.log("Unable to join", resp)
+       });
+
+channel.on("view", state_update);
 
 export default socket

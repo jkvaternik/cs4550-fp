@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
-import { ch_ready, ch_genres } from './socket';
+import React, { useState, useEffect } from 'react';
+import socket from "./socket"
+import { ch_ready, ch_genres, ch_join, ch_login } from './socket';
 
 const WaitingRoom = (props) => {
+
+    const [user, setUser] = useState("olivia");
 
     const [ready, setReady] = useState(false);
 
     const [genres, setGenres] = useState([])
 
-  function userReady() {
-    setReady(!ready);
-    //ch_ready();
-  }
+    const [state, setState] = useState({
+      playlist_id: '',
+      players_ready: {},
+      game_started: false,
+      genres: [],
+    });
+
+    useEffect(() => {
+      ch_join(setState);
+      //ch_login(props.username, state.playlist_id);
+    }, [user]);
+
+    function userReady() {
+      setReady(!ready);
+      ch_ready();
+    }
 
     function updateGenres(ev) {
     if (!ready) {
@@ -24,7 +39,7 @@ const WaitingRoom = (props) => {
         }
         
         setGenres(newGenres);
-        //ch_genres();
+        ch_genres();
       }
     }
 

@@ -22,6 +22,7 @@ export function api_login(name, password) {
   api_post("/sessions", {name, password}).then((data) => {
     console.log("login resp", data);
   });
+  
 }
 
 export function fetch_top_tracks() {

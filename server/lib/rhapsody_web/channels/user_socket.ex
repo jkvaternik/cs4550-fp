@@ -2,7 +2,7 @@ defmodule RhapsodyWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", RhapsodyWeb.RoomChannel
+  channel "room:*", RhapsodyWeb.RoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
