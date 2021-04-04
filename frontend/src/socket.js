@@ -52,7 +52,7 @@ export function ch_join(cb) {
 // }
 
 export function ch_genres(genres) {
-  console.log(channel)
+  console.log(genres)
   channel.push("genres", genres)
     .receive("ok", state_update)
     .receive("error", resp => {

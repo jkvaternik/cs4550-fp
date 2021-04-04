@@ -4,55 +4,55 @@ defmodule Rhapsody.RoomServer do
   alias Rhapsody.BackupAgent
   alias Rhapsody.Waiting
 
-  def reg(id) do
-    {:via, Registry, {Rhapsody.RoomReg, id}}
+  def reg(name) do
+    {:via, Registry, {Rhapsody.RoomReg, name}}
   end
 
-  def start(id) do
+  def start(name) do
     spec = %{
       id: __MODULE__,
-      start: {__MODULE__, :start_link, [id]},
+      start: {__MODULE__, :start_link, [name]},
       restart: :permanent,
       type: :worker
     }
     Rhapsody.RoomSup.start_child(spec)
   end
 
-  def start_link(id) do  
-    room = BackupAgent.get(id) || Waiting.new
+  def start_link(name) do  
+    room = BackupAgent.get(name) || Waiting.new
     GenServer.start_link(
       __MODULE__,
       room,
-      id: reg(id)
+      name: reg(name)
     )
   end
 
-  def reset(id) do
-    GenServer.call(reg(id), {:reset, id})
+  def reset(name) do
+    GenServer.call(reg(name), {:reset, name})
   end
 
-  def peek(id) do
-    GenServer.call(reg(id), {:peek, id})
+  def peek(name) do
+    GenServer.call(reg(name), {:peek, name})
   end
 
 #   def login(id, username) do
 #     GenServer.call(reg(name), {:login, name, username})
 #   end
 
-  def genres(id, genres) do
-    GenServer.call(reg(id), {:genres, id, genres})
+  def genres(name, genres) do
+    GenServer.call(reg(name), {:genres, name, genres})
   end
 
-  def ready(id, user) do
-    GenServer.call(reg(id), {:ready, id, user})
+  def ready(name, user) do
+    GenServer.call(reg(name), {:ready, name, user})
   end
 
-  def not_ready(id, user) do
-    GenServer.call(reg(id), {:not_ready, id, user})
+  def not_ready(name, user) do
+    GenServer.call(reg(name), {:not_ready, name, user})
   end
 
-  def game_ready(id) do
-    GenServer.call(reg(id), {:game_ready, id})
+  def game_ready(name) do
+    GenServer.call(reg(name), {:game_ready, name})
   end
 
   # implementation
@@ -61,19 +61,19 @@ defmodule Rhapsody.RoomServer do
     {:ok, game}
   end
 
-  def handle_call({:reset, id}, _from, _game) do
+  def handle_call({:reset, name}, _from, _game) do
     room = Waiting.new()
-    BackupAgent.put(id, room)
+    BackupAgent.put(name, room)
     {:reply, room, room}
   end
 
-  def handle_call({:genres, id, genres}, _from, room) do
+  def handle_call({:genres, name, genres}, _from, room) do
     room = Waiting.genres(room, genres)
-    BackupAgent.put(id, room)
+    BackupAgent.put(name, room)
     {:reply, room, room}
   end
 
-  def handle_call({:peek, _id}, _from, room) do
+  def handle_call({:peek, _name}, _from, room) do
     {:reply, room, room}
   end
 
@@ -83,21 +83,21 @@ defmodule Rhapsody.RoomServer do
 #     {:reply, game, game}
 #   end
 
-  def handle_call({:ready, id, user}, _from, room) do
+  def handle_call({:ready, name, user}, _from, room) do
     room = Waiting.ready(room, user)
-    BackupAgent.put(id, room)
+    BackupAgent.put(name, room)
     {:reply, room, room}
   end
 
-  def handle_call({:not_ready, id, user}, _from, room) do
+  def handle_call({:not_ready, name, user}, _from, room) do
     room = Waiting.notReady(room, user)
-    BackupAgent.put(id, room)
+    BackupAgent.put(name, room)
     {:reply, room, room}
   end
 
-  def handle_call({:game_ready, id}, _from, room) do
+  def handle_call({:game_ready, name}, _from, room) do
     room = Waiting.game_ready?(room)
-    BackupAgent.put(id, room)
+    BackupAgent.put(name, room)
     {:reply, room, room}
   end
 

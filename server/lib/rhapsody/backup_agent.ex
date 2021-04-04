@@ -6,15 +6,15 @@ defmodule Rhapsody.BackupAgent do
     Agent.start_link(fn -> %{} end, name: __MODULE__)
   end
 
-  def put(id, val) do
+  def put(name, val) do
     Agent.update __MODULE__, fn state ->
-      Map.put(state, id, val)
+      Map.put(state, name, val)
     end
   end
 
-  def get(id) do
+  def get(name) do
     Agent.get __MODULE__, fn state ->
-      Map.get(state, id)
+      Map.get(state, name)
     end
   end
 

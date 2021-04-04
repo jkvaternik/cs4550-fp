@@ -8,7 +8,7 @@ defmodule Rhapsody.Waiting do
     end
 
     def genres(st, genres) do
-
+        IO.puts("HI!")
         genres = st.genres ++ genres
 
         %{

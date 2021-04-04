@@ -5,15 +5,14 @@ defmodule RhapsodyWeb.RoomChannel do
   alias Rhapsody.RoomServer
 
   @impl true
-  def join("room:" <> id, payload, socket) do
+  def join("room:" <> name, payload, socket) do
     if authorized?(payload) do
-      RoomServer.start(id)
+      RoomServer.start(name)
       socket = socket
-      |> assign(:id, id)
+      |> assign(:name, name)
       |> assign(:user, "")
-      room = RoomServer.peek(id)
-     
-        IO.puts("YOU DIDI TI")
+
+      room = RoomServer.peek(name)
       view = Waiting.view(room)
       {:ok, view, socket}
     else
@@ -35,7 +34,7 @@ defmodule RhapsodyWeb.RoomChannel do
   # by sending replies to requests from the client
   @impl true
   def handle_in("genres", genres, socket) do
-    view = socket.assigns[:id]
+    view = socket.assigns[:name]
     |> RoomServer.genres(genres)
     |> Waiting.view()
     broadcast!(socket, "view", view)
@@ -44,7 +43,7 @@ defmodule RhapsodyWeb.RoomChannel do
 
   @impl true
   def handle_in("reset", _, socket) do
-    view = socket.assigns[:id]
+    view = socket.assigns[:name]
     |> RoomServer.reset()
     |> Waiting.view()
     broadcast!(socket, "view", view)
@@ -54,10 +53,10 @@ defmodule RhapsodyWeb.RoomChannel do
   @impl true
   def handle_in("ready", _, socket) do
     user = socket.assigns[:user]
-    id = socket.assigns[:id]
-    room = RoomServer.ready(id, user)
+    name = socket.assigns[:name]
+    room = RoomServer.ready(name, user)
 
-    if room.gameReady do
+    if room.game_started do
         #need to do something
         #RoomServer.start_game(game.gamename)
     end
@@ -69,10 +68,10 @@ defmodule RhapsodyWeb.RoomChannel do
     @impl true
   def handle_in("notReady", _, socket) do
     user = socket.assigns[:user]
-    id = socket.assigns[:id]
-    room = Waiting.view(id)
+    name = socket.assigns[:name]
+    room = Waiting.view(name)
     if !room.gameReady do
-      room = RoomServer.not_ready(id, user)
+      room = RoomServer.not_ready(name, user)
     end
 
     view = Waiting.view(room)
