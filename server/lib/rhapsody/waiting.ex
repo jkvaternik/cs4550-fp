@@ -85,9 +85,7 @@ defmodule Rhapsody.Waiting do
 
     def randomSample(genres) do
         listOfGenres = []
-
         listOfGenres = Enum.take_random(genres, 3)
-
         listOfGenres
     end
 end
