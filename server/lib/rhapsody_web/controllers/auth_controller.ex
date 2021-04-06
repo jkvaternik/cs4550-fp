@@ -1,45 +1,23 @@
 defmodule RhapsodyWeb.AuthController do
-  @moduledoc """
-  Auth controller responsible for handling Ueberauth responses
-  """
 
-  use RhapsodyWeb, :controller
+  @scopes "user-top-read user-top-read playlist-modify-public"
+  @spotify_auth_endpoint "https://accounts.spotify.com/authorize?"
+  ## TODO: Move this to config file
+  @client_id "006d7532893548a89635c04a92dd1fe6"
+  @redirect_url "http://localhost:3000/auth"
 
-  plug Ueberauth
-
-  alias Ueberauth.Strategy.Helpers
-  alias Rhapsody.UserFromAuth
-
-  def request(conn, _params) do
-    render(conn, "request.html", callback_url: Helpers.callback_url(conn))
+  def authenticate(conn, %{"code" => code}) do
+    {:ok, body} = HTTPoison.post("https://accounts.spotify.com/api/token", params(code), "")
+    IO.inspect(body)
   end
 
-  def delete(conn, _params) do
-    conn
-    |> put_flash(:info, "You have been logged out!")
-    |> clear_session()
-    |> redirect(to: "/")
-  end
-
-  def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
-    conn
-    |> put_flash(:error, "Failed to authenticate.")
-    |> redirect(to: "/")
-  end
-
-  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    case UserFromAuth.find_or_create(auth) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "Successfully authenticated.")
-        |> put_session(:current_user, user)
-        |> configure_session(renew: true)
-        |> redirect(to: "/")
-
-      {:error, reason} ->
-        conn
-        |> put_flash(:error, reason)
-        |> redirect(to: "/")
-    end
+  def params(code) do
+    [
+      %{
+        "grant-type": "authorization_code",
+        "code": code,
+        "redirect_uri": "http://localhost:3000/auth"
+      }
+    ]
   end
 end

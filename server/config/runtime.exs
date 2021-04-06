@@ -3,7 +3,7 @@ import Config
 config :ueberauth, Ueberauth.Strategy.Spotify.OAuth,
        client_id: "006d7532893548a89635c04a92dd1fe6",
        client_secret: "5494091e5f3e42038eb1853784834cbb",
-       redirect_uri: "http://localhost:4000/auth/spotify/callback"
+       redirect_uri: "http://localhost:3000"
 
 case config_env() do
   :prod ->

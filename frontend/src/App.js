@@ -1,76 +1,41 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
 import './api';
 import WaitingRoom from './WaitingRoom/WaitingRoom';
 import './App.css';
+import { Container } from 'react-bootstrap';
+import { Switch, Route } from 'react-router-dom';
 
-const authEndPoint = "https://accounts.spotify.com/authorize";
-const clientId = "006d7532893548a89635c04a92dd1fe6";
-const redirectUri = "http://localhost:3000/";
-const scopes = ["playlist-modify-public", "user-top-read"];
+import Home from './Home/Home';
+import Login from './Login/Login';
+import Auth from './Login/Auth/Auth';
+import WaitingRoom from './waitingRoom';
+import NavigationBar from './Navigation/NavigationBar';
 
-const hash = window.location.hash
-  .substring(1)
-  .split("&")
-  .reduce(function (initial, item) {
-    if (item) {
-      var parts = item.split("=");
-      initial[parts[0]] = decodeURIComponent(parts[1]);
-    }
-    return initial;
-  }, {});
-window.location.hash = "";
+import './App.css';
 
 function App() {
-  const [token, setToken] = useState(null);
-  const [user, setUser] = useState({
-    name: "",
-    password: ""
-  })
-  
-
-  useEffect(
-    () => {
-      let _token = hash.access_token;
-
-      if (_token) {
-        setToken(_token)
-      }
-    }, [])
-    
-  
   return (
-      
-    <div className="App">
-      {token ?
-        <div>
-          <p>Access Token:</p>
-          <p>{token}</p>
+    <Container>
+      <NavigationBar />
+      <h1 style={{marginTop: '50px'}}>Rhapsody</h1>
+      <Switch>
+        <Route path='/' exact>
+          <Home />
+        </Route>
+        <Route path='/login' exact>
+          <Login />
+        </Route>
+        <Route path='/auth' exact>
+          <Auth />
+        </Route>
+        <Route path='/waiting' exact>
           <WaitingRoom />
-        </div>
-        :
-        <div>
-        {/* <input 
-          type = "text"
-          value = {user.name}
-          onChange = {(ev) => setUser({...user, name: ev.target.value})}
-          placeholder = "Username"
-        />
-        <input 
-          type = "password"
-          value = {user.password}
-          onChange = {(ev) => setUser({...user, password: ev.target.value})}
-          placeholder = "Password"
-        />
-        <button onClick={() => api_login(user.name, user.password)}>Login</button> */}
-        <a href={`${authEndPoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}>
-          Login with Spotify
-        </a>
-        </div>
-      
-      }
-    </div>
-    // 
+        </Route>
+        {/* <Route path='/playlist/:id' exact>
+          <Playlist />
+        </Route> */}
+      </Switch>
+    </Container>
   );
 }
 

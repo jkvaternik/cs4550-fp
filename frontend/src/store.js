@@ -1,6 +1,17 @@
 import { createStore, combineReducers } from 'redux';
 
-function session(action, state = restore_session()) {
+function error(state = null, action) {
+  switch (action.type) {
+  case 'error/set':
+    return action.data;
+  case 'session/set':
+    return null;
+  default:
+    return state;
+  }
+}
+
+function session(state = restore_session(), action) {
   switch (action.type) {
     case 'session/set':
       save_session(action.data);
@@ -18,7 +29,8 @@ function save_session(sess) {
 }
 
 function restore_session() {
-  let sessionItem = localStorage.getItem("session");
+  let sessionItem = localStorage.getItem('session');
+  console.log("Session", sessionItem)
   if (!sessionItem) {
     return null;
   }
@@ -33,9 +45,37 @@ function restore_session() {
   }
 }
 
+function token(state = restore_token(), action) {
+  switch (action.type) {
+    case 'token/set':
+      save_token(action.data)
+      return action.data;
+    case 'token/clear':
+      localStorage.removeItem("token")
+      return null;
+    default:
+      return state;
+  }
+}
+
+function save_token(authToken) {
+  let tokenItem = Object.assign({}, authToken);
+  localStorage.setItem('token', JSON.stringify(tokenItem));
+}
+
+function restore_token() {
+  let tokenItem = localStorage.getItem('token');
+  console.log("Token", tokenItem)
+  if (!tokenItem) {
+    return null;
+  }
+  return JSON.parse(tokenItem);
+}
+
 function root_reducer(state, action) {
+  console.log('root_reducer', state, action);
   let reducer = combineReducers({
-    session
+    error, session, token
   })
   return reducer(state, action)
 }

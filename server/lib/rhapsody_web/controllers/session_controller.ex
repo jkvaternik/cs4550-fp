@@ -4,18 +4,18 @@
 defmodule RhapsodyWeb.SessionController do
   use RhapsodyWeb, :controller
 
-  def create(conn, %{"name" => name}) do
-    user = Rhapsody.Users.get_user_by_name(name)
+  def create(conn, %{"email" => email, "password" => password}) do
+    # user = Rhapsody.Users.get_user_by_name(name)
     sess = %{
-      user_id: user.id,
-      name: user.name,
-      token: Phoenix.Token.sign(conn, "user_id", user.id)
+      user_id: 1,
+      email: email,
+      # token: Phoenix.Token.sign(conn, "user_id", user.id)
     }
 
     conn
     |> put_resp_header(
       "content-type",
       "application/json; charset=UTF-8")
-    |> send_resp(:created, Jason.encode!(sess))
+    |> send_resp(:created, Jason.encode!(%{session: sess}))
   end
 end
