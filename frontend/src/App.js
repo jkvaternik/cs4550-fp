@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import './api';
-import WaitingRoom from './WaitingRoom';
+import WaitingRoom from './WaitingRoom/WaitingRoom';
 import './App.css';
 
 const authEndPoint = "https://accounts.spotify.com/authorize";

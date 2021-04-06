@@ -12,7 +12,7 @@ let channel = socket.channel(`room:1`, {});
 
 
 let state = {
-    playlist_id: 1,
+    playlist_name: "",
     players_ready: {},
     game_started: false,
     genres: [],
@@ -33,23 +33,29 @@ export function ch_join(cb) {
   callback(state)
 }
 
-// export function ch_login(username, playlist_id) {
-//   //channel = socket.channel(`room:${playlist_id}`, {});
+export function ch_login(username, playlist_name) {
+  channel = socket.channel(`room:${playlist_name}`, {});
 
-//   channel.join()
-//     .receive("ok", state_update)
-//     .receive("error", resp => {
-//       console.log("Unable to join", resp)
-//     })
+  channel.join()
+    .receive("ok", state_update)
+    .receive("error", resp => {
+      console.log("Unable to join", resp)
+    })
 
-//   channel.on("view", state_update);
+  channel.push("playlist", playlist_name)
+    .receive("ok", state_update)
+    .receive("error", resp => {
+      console.log("Unable to push", resp)
+    });
 
-//   channel.push("login", username)
-//     .receive("ok", state_update)
-//     .receive("error", resp => {
-//       console.log("Unable to push", resp)
-//     });
-// }
+  channel.on("view", state_update);
+
+  channel.push("login", username)
+    .receive("ok", state_update)
+    .receive("error", resp => {
+      console.log("Unable to push", resp)
+    });
+}
 
 export function ch_genres(genres) {
   console.log(genres)

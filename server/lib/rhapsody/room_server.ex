@@ -35,12 +35,16 @@ defmodule Rhapsody.RoomServer do
     GenServer.call(reg(name), {:peek, name})
   end
 
-#   def login(id, username) do
-#     GenServer.call(reg(name), {:login, name, username})
-#   end
+  def login(name, username) do
+    GenServer.call(reg(name), {:login, name, username})
+  end
 
   def genres(name, genres) do
     GenServer.call(reg(name), {:genres, name, genres})
+  end
+
+  def playlist(name) do
+    GenServer.call(reg(name), {:playlist, name})
   end
 
   def ready(name, user) do
@@ -73,15 +77,21 @@ defmodule Rhapsody.RoomServer do
     {:reply, room, room}
   end
 
+  def handle_call({:playlist, name}, _from, room) do
+    room = Waiting.playlist(room, name)
+    BackupAgent.put(name, room)
+    {:reply, room, room}
+  end
+
   def handle_call({:peek, _name}, _from, room) do
     {:reply, room, room}
   end
 
-#   def handle_call({:login, name, username}, _from, game) do
-#     game = Game.login(game, name, username)
-#     BackupAgent.put(name, game)
-#     {:reply, game, game}
-#   end
+  def handle_call({:login, name, username}, _from, game) do
+    game = Waiting.login(game, username)
+    BackupAgent.put(name, game)
+    {:reply, game, game}
+  end
 
   def handle_call({:ready, name, user}, _from, room) do
     room = Waiting.ready(room, user)

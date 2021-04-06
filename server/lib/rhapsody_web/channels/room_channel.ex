@@ -20,15 +20,15 @@ defmodule RhapsodyWeb.RoomChannel do
     end
   end
 
-#   @impl true
-#   def handle_in("login", user, socket) do
-#     socket = assign(socket, :user, user)
-#     view = socket.assigns[:name]
-#     |> GameServer.login(user)
-#     |> Game.view()
-#     broadcast!(socket, "view", view)
-#     {:reply, {:ok, view}, socket}
-#   end
+  @impl true
+  def handle_in("login", user, socket) do
+    socket = assign(socket, :user, user)
+    view = socket.assigns[:name]
+    |> RoomServer.login(user)
+    |> Waiting.view()
+    broadcast!(socket, "view", view)
+    {:reply, {:ok, view}, socket}
+  end
 
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
@@ -40,6 +40,16 @@ defmodule RhapsodyWeb.RoomChannel do
     broadcast!(socket, "view", view)
     {:reply, {:ok, view}, socket}
   end
+
+  @impl true
+  def handle_in("playlist", playlist, socket) do
+    view = socket.assigns[:name]
+    |> RoomServer.playlist()
+    |> Waiting.view()
+    broadcast!(socket, "view", view)
+    {:reply, {:ok, view}, socket}
+  end
+
 
   @impl true
   def handle_in("reset", _, socket) do
