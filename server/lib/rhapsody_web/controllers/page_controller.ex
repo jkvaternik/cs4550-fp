@@ -32,6 +32,6 @@ defmodule RhapsodyWeb.PageController do
   end
 
   def params(code) do
-    URI.encode_query(%{"grant_type" => "authorization_code", "code" => "#{code}", "redirect_uri" => "http://localhost:3000/callback"})
+    URI.encode_query(%{"grant_type" => "authorization_code", "code" => "#{code}", "redirect_uri" => "http://localhost:3000/auth"})
   end
 end

@@ -20,7 +20,7 @@ const WaitingRoom = (props) => {
     useEffect(() => {
       ch_join(setState);
       //ch_login(props.username, state.playlist_id);
-    }, [user]);
+    }, [state, user]);
 
     function userReady() {
       setReady(!ready);

@@ -1,43 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router';
 
-import { api_post } from '../api';
+import { api_login } from '../api'; 
 
 const Login = () => {
-  const [token, setToken] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const url = window.location.href;
-    
-    if (url.includes("?code=")) {
-      let code = url.split("?code=")[1];
+  const history = useHistory();
 
-      api_post("/login", { code: code }).then((resp) => {
-        console.log(resp)
-      })
-    }
-  }, []) 
+  const loginHandler = (ev) => {
+    ev.preventDefault();
+    api_login(email, password);
+    history.push('/auth');
+  }
 
   return (
     <section>
-      {/* <Form onSubmit={onSubmit}>
+      <Form onSubmit={loginHandler}>
         <Form.Group controlId="formLoginEmail">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter email"/>
+          <Form.Control 
+            type="email" 
+            onChange={(ev) => setEmail(ev.target.value)}
+            value={email}
+            placeholder="Enter email"/>
         </Form.Group>
         <Form.Group controlId="formLoginPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password"/>
+          <Form.Control 
+            type="password" 
+            onChange={(ev) => setPassword(ev.target.value)}
+            value={password}
+            placeholder="Password"/>
         </Form.Group>
         <Button variant="primary" type="submit">
           Login
         </Button>
-      </Form> */}
-      <a
-        href="https://accounts.spotify.com/authorize?client_id=006d7532893548a89635c04a92dd1fe6&response_type=code&redirect_uri=http://localhost:3000/callback&scope=user-top-read%20user-top-read%20playlist-modify-public"
-      >
-        Login with Spotify
-      </a>
+      </Form> 
     </section>
   );
 }

@@ -4,7 +4,7 @@ defmodule RhapsodyWeb.AuthController do
   @spotify_auth_endpoint "https://accounts.spotify.com/authorize?"
   ## TODO: Move this to config file
   @client_id "006d7532893548a89635c04a92dd1fe6"
-  @redirect_url "http://localhost:3000/callback"
+  @redirect_url "http://localhost:3000/auth"
 
   def authenticate(conn, %{"code" => code}) do
     {:ok, body} = HTTPoison.post("https://accounts.spotify.com/api/token", params(code), "")
@@ -16,7 +16,7 @@ defmodule RhapsodyWeb.AuthController do
       %{
         "grant-type": "authorization_code",
         "code": code,
-        "redirect_uri": "http://localhost:3000/callback"
+        "redirect_uri": "http://localhost:3000/auth"
       }
     ]
   end

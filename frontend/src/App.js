@@ -1,23 +1,37 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import './api';
-import WaitingRoom from './waitingRoom';
-import './App.css';
-import Login from './Login/Login';
 import { Container } from 'react-bootstrap';
+import { Switch, Route } from 'react-router-dom';
 
-const authEndPoint = "https://accounts.spotify.com/authorize";
-const clientId = "006d7532893548a89635c04a92dd1fe6";
-const redirectUri = "http://localhost:3000/";
-const scopes = ["playlist-modify-public", "user-top-read"];
+import Home from './Home/Home';
+import Login from './Login/Login';
+import Auth from './Login/Auth/Auth';
+import WaitingRoom from './waitingRoom';
+import NavigationBar from './Navigation/NavigationBar';
+
+import './App.css';
 
 function App() {
   return (
     <Container>
-      {/* Edit styling later */}
-      <br />
-      <h1>Rhapsody</h1>
-      <Login />
+      <NavigationBar />
+      <h1 style={{marginTop: '50px'}}>Rhapsody</h1>
+      <Switch>
+        <Route path='/' exact>
+          <Home />
+        </Route>
+        <Route path='/login' exact>
+          <Login />
+        </Route>
+        <Route path='/auth' exact>
+          <Auth />
+        </Route>
+        <Route path='waiting' exact>
+          <WaitingRoom />
+        </Route>
+        {/* <Route path='/playlist/:id' exact>
+          <Playlist />
+        </Route> */}
+      </Switch>
     </Container>
   );
 }

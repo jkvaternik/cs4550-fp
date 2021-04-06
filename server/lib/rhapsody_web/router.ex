@@ -25,7 +25,7 @@ defmodule RhapsodyWeb.Router do
   scope "/api/v1", RhapsodyWeb do
     pipe_through :api
 
-    post "/login", PageController, :authenticate
+    post "/auth", PageController, :authenticate
 
     resources "/users", UserController, except: [:new, :edit]
     resources "/tracks", TrackController, except: [:new, :edit]
