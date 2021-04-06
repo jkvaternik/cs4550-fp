@@ -20,7 +20,7 @@ const WaitingRoom = (props) => {
 
     useEffect(() => {
       ch_join(setState);
-    });
+    }, [user, state]);
 
     function userReady() {
       setReady(!ready);
