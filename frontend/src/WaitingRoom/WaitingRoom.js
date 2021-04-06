@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { ch_ready, ch_genres, ch_join, ch_login } from '../socket';
-
+import { connect } from 'react-redux';
+ 
 const WaitingRoom = ({ session }) => {
 
     const [playlist, setPlaylist] = useState("");
@@ -19,8 +20,8 @@ const WaitingRoom = ({ session }) => {
 
     let history = useHistory();
 
-    if (game_started) {
-        history.push("/playlist/" + playlist_name);
+    if (state.game_started) {
+        history.push("/playlist/" + state.playlist_name);
     }
 
     useEffect(() => {

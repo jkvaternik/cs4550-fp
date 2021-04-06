@@ -2,7 +2,7 @@ import React from 'react';
 import './api';
 
 import WaitingRoom from './WaitingRoom/WaitingRoom';
-import Playlist from '/Playlist/Playlist';
+//import Playlist from './Playlist/Playlist';
 import './App.css';
 import { Container } from 'react-bootstrap';
 import { Switch, Route } from 'react-router-dom';
@@ -32,9 +32,9 @@ function App() {
         <Route path='/waiting' exact>
           <WaitingRoom />
         </Route>
-        <Route path='/playlist/:name' exact>
+        {/* <Route path='/playlist/:name' exact>
           <Playlist />
-        </Route>
+        </Route> */}
       </Switch>
     </Container>
   );
