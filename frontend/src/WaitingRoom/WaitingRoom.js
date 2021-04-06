@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { ch_ready, ch_genres, ch_join, ch_login } from '../socket';
 
-const WaitingRoom = (props) => {
-
-    const [user, setUser] = useState("olivia");
+const WaitingRoom = ({ session }) => {
 
     const [playlist, setPlaylist] = useState("");
 
@@ -18,9 +17,15 @@ const WaitingRoom = (props) => {
       genres: [],
     });
 
+    let history = useHistory();
+
+    if (game_started) {
+        history.push("/playlist/" + playlist_name);
+    }
+
     useEffect(() => {
       ch_join(setState);
-    }, [user, state]);
+    }, [state]);
 
     function userReady() {
       setReady(!ready);
@@ -44,7 +49,7 @@ const WaitingRoom = (props) => {
 
     function onClick() {
         if (!(playlist === "")) {
-            ch_login(user, playlist);
+            ch_login(session.id, playlist);
             setState({
                 playlist_name: playlist,
                 game_started: false,
@@ -293,4 +298,9 @@ const WaitingRoom = (props) => {
   return body; 
 }
 
-export default WaitingRoom;
+
+function state2props({session}) {
+    return { session };
+  }
+
+  export default connect(state2props)(WaitingRoom);
