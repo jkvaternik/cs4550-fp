@@ -5,7 +5,7 @@ async function api_get(path) {
   return resp.data;
 }
 
-async function api_post(path, data) {
+export async function api_post(path, data) {
   let opts = {
     method: 'POST',
     headers: {
@@ -18,7 +18,12 @@ async function api_post(path, data) {
   return await text.json();
 }
 
+export function api_auth(code) {
+  return api_post("/login", { code });
+}
+
 export function api_login(name, password) {
+  
   api_post("/sessions", {name, password}).then((data) => {
     console.log("login resp", data);
   });
