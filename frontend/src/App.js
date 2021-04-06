@@ -1,6 +1,8 @@
 import React from 'react';
 import './api';
+
 import WaitingRoom from './WaitingRoom/WaitingRoom';
+import Playlist from '/Playlist/Playlist';
 import './App.css';
 import { Container } from 'react-bootstrap';
 import { Switch, Route } from 'react-router-dom';
