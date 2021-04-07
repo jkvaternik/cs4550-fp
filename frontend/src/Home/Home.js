@@ -31,7 +31,7 @@ const Home = ({session, token}) => {
       <Row>
         { playlistCards }
       </Row>
-      <Link to={'/waitingroom'} className="btn btn-primary">
+      <Link to={'/waiting'} className="btn btn-primary">
         Create Playlist
       </Link>
     </section>

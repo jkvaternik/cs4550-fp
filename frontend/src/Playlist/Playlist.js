@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const Playlist = (props) => { 
+const Playlist = (props) => {
 
-    const { name } = useParams();
+  // const { name } = useParams();
 
     return (
         <>
@@ -12,8 +12,8 @@ const Playlist = (props) => {
     );
 }
 
-function state2props({event}) {
-    return { event };
-  }
-  
-  export default connect(state2props)(Playlist);
+function state2props({ event }) {
+  return { event };
+}
+
+export default connect(state2props)(Playlist);
