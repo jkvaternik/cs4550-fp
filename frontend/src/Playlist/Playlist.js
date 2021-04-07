@@ -16,7 +16,6 @@ const Playlist = () => {
         ],
         comments: [
             {}
-
         ],
         users: ["olivia", "jaime", "jim", "jamie"]
     })
