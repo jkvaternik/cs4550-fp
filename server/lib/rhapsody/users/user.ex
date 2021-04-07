@@ -18,7 +18,7 @@ defmodule Rhapsody.Users.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :email])
-    |> validate_password(attrs["password"])
+    # |> validate_password(attrs["password"])
     |> add_password_hash(attrs["password"])
     |> validate_required([:name, :email, :password_hash])
   end
@@ -31,14 +31,14 @@ defmodule Rhapsody.Users.User do
     change(cset, Argon2.add_hash(password))
   end
 
-  def validate_password(cset, nil) do
-    cset
-  end
+  # def validate_password(cset, nil) do
+  #   cset
+  # end
 
-  def validate_password(cset, password) do
-    case PasswordStrength.strong_password?(password) do
-      {:ok, _password} -> cset
-      {:error, message} -> add_error(cset, :password, message)
-    end
-  end
+  # def validate_password(cset, password) do
+  #   case PasswordStrength.strong_password?(password) do
+  #     {:ok, _password} -> cset
+  #     {:error, message} -> add_error(cset, :password, message)
+  #   end
+  # end
 end

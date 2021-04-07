@@ -13,4 +13,11 @@
 alias Rhapsody.Repo
 alias Rhapsody.Users.User
 
-jim = Repo.insert!(%User{name: "jim", email: "jim@gmail", password_hash: "password"})
+defmodule Inject do
+  def user(name, email, pass) do
+    hash = Argon2.hash_pwd_salt(pass)
+    Repo.insert!(%User{name: name, email: email, password_hash: hash})
+  end
+end
+
+jimbo = Inject.user("jimbo", "jimbo@gmail.com", "password")
