@@ -32,9 +32,9 @@ function App() {
         <Route path='/waiting' exact>
           <WaitingRoom />
         </Route>
-        {/* <Route path='/playlist/:name' exact>
+        <Route path='/playlist/:name' exact>
           <Playlist />
-        </Route> */}
+        </Route> 
       </Switch>
     </Container>
   );

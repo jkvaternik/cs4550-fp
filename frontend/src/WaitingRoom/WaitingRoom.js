@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { ch_ready, ch_genres, ch_join, ch_login } from '../socket';
-import { connect } from 'react-redux';
  
-const WaitingRoom = ({ session }) => {
+const WaitingRoom = ({ session, token }) => {
 
     const [playlist, setPlaylist] = useState("");
 
@@ -22,6 +21,7 @@ const WaitingRoom = ({ session }) => {
     let history = useHistory();
 
     if (state.game_started) {
+        // TODO: add api request to create playlist
         history.push("/playlist/" + state.playlist_name);
     }
 
@@ -52,11 +52,6 @@ const WaitingRoom = ({ session }) => {
     function onClick() {
         if (!(playlist === "")) {
             ch_login(session.user_id, playlist);
-            setState({
-                playlist_name: playlist,
-                game_started: false,
-                genres: [],
-              });
         }
       }
 
@@ -301,8 +296,8 @@ const WaitingRoom = ({ session }) => {
 }
 
 
-function state2props({session}) {
-    return { session };
+function state2props({session, token}) {
+    return { session, token };
   }
 
   export default connect(state2props)(WaitingRoom);
