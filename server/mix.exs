@@ -47,8 +47,8 @@ defmodule Rhapsody.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.5"},
       {:cors_plug, "~> 2.0"},
-      {:oauth2, "~> 2.0"},
-      {:ueberauth_spotify, "~> 0.2.1"},
+      {:argon2_elixir, "~> 2.0"},
+      {:not_qwerty123, "~> 2.2"},
       poison: "~> 3.1"
     ]
   end

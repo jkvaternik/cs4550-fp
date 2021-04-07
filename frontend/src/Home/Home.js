@@ -13,12 +13,11 @@ const playlists = [
   { name: "Detroit Techno Thursdays" }
 ]
 
-const Home = ({session, token}) => { 
-
+const Home = ({session, token}) => {
   if (!session || !token) {
     return (
       <section>
-        <h4>Login!</h4>
+        <h4>Please login to continue</h4>
       </section>
     )
   }

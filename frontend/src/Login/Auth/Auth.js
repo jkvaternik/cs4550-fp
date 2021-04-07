@@ -3,9 +3,8 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { api_auth } from '../../api';
-import store from '../../store';
 
-const Auth = ({ session }) => {
+const Auth = ({ session, token }) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -14,6 +13,7 @@ const Auth = ({ session }) => {
     if (url.includes("?code=")) {
       let code = url.split("?code=")[1];
 
+      // Pull out oauth code
       api_auth(code);
       history.push('/');
     }
@@ -22,8 +22,14 @@ const Auth = ({ session }) => {
   if (!session) {
     return (
       <section>
-        <h4>Login!</h4>
+        <h4>Please login to continue</h4>
       </section>
+    )
+  }
+
+  if (token) {
+    return (
+      <Redirect to={'/'} />
     )
   }
 
@@ -38,4 +44,4 @@ const Auth = ({ session }) => {
   );
 }
 
-export default connect(({ session }) => ({ session }))(Auth)
+export default connect(({ session, token }) => ({ session, token }))(Auth)

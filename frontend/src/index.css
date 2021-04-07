@@ -1,5 +1,9 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
+* {
+  background-color: #52498C;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

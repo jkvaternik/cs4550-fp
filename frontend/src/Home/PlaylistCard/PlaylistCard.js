@@ -1,13 +1,15 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Col, Card } from 'react-bootstrap';
 
 const PlaylistCard = ({ playlist }) => {
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>{playlist.name}</Card.Title>
-      </Card.Body>
-    </Card>
+    <Col className="col-sm-4" style={{ display: 'inline', marginBottom: '30px' }}>
+      <Card>
+        <Card.Body>
+          <Card.Title style={{color: '#ffffff'}}>{playlist.name}</Card.Title>
+        </Card.Body>
+      </Card>
+    </Col>
   )
 }
 

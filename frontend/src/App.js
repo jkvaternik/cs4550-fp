@@ -9,6 +9,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Home from './Home/Home';
 import Login from './Login/Login';
+import Register from './Login/User/Register';
 import Auth from './Login/Auth/Auth';
 import NavigationBar from './Navigation/NavigationBar';
 
@@ -18,13 +19,16 @@ function App() {
   return (
     <Container>
       <NavigationBar />
-      <h1 style={{marginTop: '50px'}}>Rhapsody</h1>
+      <h1 style={{ marginTop: '50px', color: '#ffffff' }}>Rhapsody</h1>
       <Switch>
         <Route path='/' exact>
           <Home />
         </Route>
         <Route path='/login' exact>
           <Login />
+        </Route>
+        <Route path='/register' exact>
+          <Register />
         </Route>
         <Route path='/auth' exact>
           <Auth />
@@ -34,7 +38,7 @@ function App() {
         </Route>
         <Route path='/playlist/:name' exact>
           <Playlist />
-        </Route> 
+        </Route>
       </Switch>
     </Container>
   );

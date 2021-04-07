@@ -7,7 +7,7 @@ async function api_get(path) {
   return resp.data;
 }
 
-export async function api_post(path, data) {
+async function api_post(path, data) {
   let opts = {
     method: 'POST',
     headers: {
@@ -20,6 +20,7 @@ export async function api_post(path, data) {
   return await text.json();
 }
 
+// AUTH & LOGIN
 export function api_auth(code) {
   api_post("/auth", { code }).then((data) => {
     console.log("auth resp", data);
@@ -60,8 +61,27 @@ export function api_login(email, password) {
   });
 }
 
+// TRACKS (?)
 export function fetch_top_tracks() {
   api_get("/tracks").then((data) => {
     return data;
   })
+}
+
+
+// USERS
+export function fetch_user(id) {
+  return api_get(`/users/${id}`);
+}
+
+export function create_user(user) {
+  return api_post("/users", {user});
+}
+
+// PLAYLISTS
+export function fetch_playlists() {
+  api_get("/playlists").then((data) => store.dispatch({
+    type: 'posts/set',
+    data: data,
+  }))
 }

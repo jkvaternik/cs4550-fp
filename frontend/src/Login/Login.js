@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { api_login } from '../api'; 
 
-const Login = () => {
+const Login = ({ error }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,7 +15,11 @@ const Login = () => {
   const loginHandler = (ev) => {
     ev.preventDefault();
     api_login(email, password);
-    history.push('/auth');
+
+    // Check for error from backend — going to have to pull code to 
+    if (!error) {
+      history.push('/auth')
+    }
   }
 
   return (
@@ -47,4 +52,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default connect(({ error }) => ({ error }))(Login);
