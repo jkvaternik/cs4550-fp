@@ -2,11 +2,7 @@ import React from 'react';
 import './api';
 
 import WaitingRoom from './WaitingRoom/WaitingRoom';
-<<<<<<< HEAD
-//import Playlist from './Playlist/Playlist';
-=======
 import Playlist from './Playlist/Playlist';
->>>>>>> cb9a129 (meeting code)
 import './App.css';
 import { Container } from 'react-bootstrap';
 import { Switch, Route } from 'react-router-dom';
