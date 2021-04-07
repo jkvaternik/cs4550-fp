@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { api_login } from '../api'; 
 
@@ -38,7 +39,10 @@ const Login = () => {
         <Button variant="primary" type="submit">
           Login
         </Button>
-      </Form> 
+      </Form>
+      <Link to={'/register'}>
+        Register
+      </Link>
     </section>
   );
 }
