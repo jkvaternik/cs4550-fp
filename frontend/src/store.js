@@ -17,6 +17,7 @@ function session(state = restore_session(), action) {
       save_session(action.data);
       return action.data;
     case 'session/clear':
+      localStorage.removeItem("session")
       return null;
     default:
       return state;
