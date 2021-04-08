@@ -3,9 +3,11 @@ defmodule Rhapsody.Tracks.Track do
   import Ecto.Changeset
 
   schema "tracks" do
-    field :album, :string
     field :artist, :string
     field :name, :string
+    field :spotifyID, :string
+
+    belongs_to :playlist, Rhapsody.Playlists.Playlist
 
     timestamps()
   end
@@ -13,7 +15,7 @@ defmodule Rhapsody.Tracks.Track do
   @doc false
   def changeset(track, attrs) do
     track
-    |> cast(attrs, [:name, :artist, :album])
-    |> validate_required([:name, :artist, :album])
+    |> cast(attrs, [:name, :artist, :spotifyID, :playlist_id])
+    |> validate_required([:name, :artist, :spotifyID, :playlist_id])
   end
 end

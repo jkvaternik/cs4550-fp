@@ -8,6 +8,7 @@ defmodule Rhapsody.Playlists.Playlist do
 
     has_many :users, Rhapsody.Users.User
     has_many :comments, Rhapsody.Comments.Comment
+    has_many :tracks, Rhapsody.Tracks.Track
 
     timestamps()
   end
@@ -19,4 +20,3 @@ defmodule Rhapsody.Playlists.Playlist do
     |> validate_required([:name, :description])
   end
 end
-

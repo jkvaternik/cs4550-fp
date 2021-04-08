@@ -9,8 +9,8 @@ defmodule RhapsodyWeb.PlaylistController do
 
   def index(conn, _params) do
     playlists = Playlists.list_playlists()
-    |> Enum.map(fn p -> Playlists.load_comments(p) end)
-    |> Enum.map(fn p -> Playlists.load_users(p) end)
+    |> Enum.map(fn p -> Playlists.load_playlist(p) end)
+
     IO.puts(inspect(playlists))
     render(conn, "index.json", playlists: playlists)
   end
@@ -19,10 +19,10 @@ defmodule RhapsodyWeb.PlaylistController do
     tokens = String.split(playlist_params["tokens"], ",")
     genres = String.split(playlist_params["genres"], ",")
     APIRequests.createPlaylist(tokens, genres, playlist_params["playlist_name"])
+
     with {:ok, %Playlist{} = playlist} <- Playlists.create_playlist(playlist_params) do
-      playlist = playlist 
-      #|> Playlists.load_comments()
-      #|> Playlists.load_users()
+      playlist = playlist
+
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.playlist_path(conn, :show, playlist))
@@ -31,13 +31,12 @@ defmodule RhapsodyWeb.PlaylistController do
   end
 
   def show(conn, %{"id" => id}) do
-    
+
     playlist = Playlists.get_playlist!(id)
-    |> Playlists.load_comments()
-    # |> Playlists.load_users()
+    |> Playlists.load_playlist()
 
     IO.inspect(playlist)
-    
+
     render(conn, "show.json", playlist: playlist)
   end
 
