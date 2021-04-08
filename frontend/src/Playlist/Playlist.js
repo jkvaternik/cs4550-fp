@@ -3,13 +3,15 @@ import { useParams } from 'react-router-dom';
 import { Row, Col, Table } from 'react-bootstrap';
 import CommentsForm from './Comments/CommentsForm';
 import Comments from './Comments/Comments';
+import { fetch_playlist } from '../api';
 
 const Playlist = () => {
 
-    const { name } = useParams();
+    const { id } = useParams();
+
     const [playlist, setPlaylist] = useState({
         id: 1,
-        name: name,
+        name: "",
         description: "",
         songs: [
             {name: "The poop song", artist: "Learning Resource Center", album: "The poop song"},
@@ -30,9 +32,13 @@ const Playlist = () => {
             </tr>)
         )
 
-    // useEffect(() => {
-    //     // TODO: api get request
-    // }, [name])
+    useEffect(() => {
+        fetch_playlist(id).then(res => {
+            console.log(res);
+            setPlaylist({...playlist, ...res});
+        });
+        console.log(playlist)
+    }, [id])
 
     return (
         <>

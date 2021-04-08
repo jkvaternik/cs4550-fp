@@ -72,10 +72,19 @@ function restore_token() {
   return JSON.parse(tokenItem);
 }
 
+function playlists(state = [], action) {
+  switch (action.type) {
+  case 'playlists/set':
+    return action.data;
+  default:
+    return state;
+  }
+}
+
 function root_reducer(state, action) {
   console.log('root_reducer', state, action);
   let reducer = combineReducers({
-    error, session, token, 
+    error, session, token, playlists
   })
   return reducer(state, action)
 }

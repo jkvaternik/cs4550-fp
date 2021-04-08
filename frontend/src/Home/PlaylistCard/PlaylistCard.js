@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const PlaylistCard = ({ playlist }) => {
   return (
@@ -7,6 +8,7 @@ const PlaylistCard = ({ playlist }) => {
       <Card>
         <Card.Body>
           <Card.Title style={{color: '#ffffff'}}>{playlist.name}</Card.Title>
+          <Link></Link>
         </Card.Body>
       </Card>
     </Col>

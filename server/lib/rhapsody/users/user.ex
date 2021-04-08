@@ -8,7 +8,7 @@ defmodule Rhapsody.Users.User do
     field :email, :string
     field :name, :string
     field :password_hash, :string
-    has_many :playlists, Rhapsody.Playlists.Playlist, on_delete: :delete_all
+    #has_many :playlists, Rhapsody.Playlists.Playlist, on_delete: :delete_all
     has_many :comments, Rhapsody.Comments.Comment
 
     timestamps()

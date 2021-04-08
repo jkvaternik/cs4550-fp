@@ -97,9 +97,13 @@ export function create_user(user) {
 // PLAYLISTS
 export function fetch_playlists() {
   api_get("/playlists").then((data) => store.dispatch({
-    type: 'posts/set',
+    type: 'playlists/set',
     data: data,
   }))
+}
+
+export function fetch_playlist(id) {
+  return api_get(`/playlists/${id}`)
 }
 
 // COMMENTS
@@ -127,4 +131,8 @@ export async function create_comment(comment) {
 
 export function delete_comment(id) {
   return api_delete(`/comments/${id}`);
+}
+
+export function load_defaults() {
+  fetch_playlists();
 }

@@ -23,7 +23,7 @@ const WaitingRoom = ({ session, token }) => {
 
     if (state.game_started) {
         // TODO: add api request to create playlist
-        history.push("/playlist/" + state.playlist_name);
+        history.push("/");
     }
 
     useEffect(() => {

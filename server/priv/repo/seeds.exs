@@ -12,6 +12,7 @@
 
 alias Rhapsody.Repo
 alias Rhapsody.Users.User
+alias Rhapsody.Playlists.Playlist
 
 defmodule Inject do
   def user(name, email, pass) do
@@ -21,3 +22,5 @@ defmodule Inject do
 end
 
 jimbo = Inject.user("jimbo", "jimbo@gmail.com", "password")
+playlist = Repo.insert!(%Playlist{name: "Olivia's Playlist", description: "really good songs"})
+

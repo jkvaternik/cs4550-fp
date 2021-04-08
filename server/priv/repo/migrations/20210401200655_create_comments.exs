@@ -3,9 +3,9 @@ defmodule Rhapsody.Repo.Migrations.CreateComments do
 
   def change do
     create table(:comments) do
-      add :body, :text
-      add :user_id, references(:users, on_delete: :nothing)
-      add :playlist_id, references(:playlists, on_delete: :nothing)
+      add :body, :text, null: false
+      add :user_id, references(:users, on_delete: :nothing), null: false
+      add :playlist_id, references(:playlists, on_delete: :nothing), null: false
 
       timestamps()
     end

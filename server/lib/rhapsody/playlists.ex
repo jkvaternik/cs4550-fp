@@ -19,11 +19,10 @@ defmodule Rhapsody.Playlists do
   """
   def list_playlists do
     Repo.all(Playlist)
-    |> Repo.preload(:user)
   end
 
   def load_comments(%Playlist{} = playlist) do
-    Repo.preload(playlist, [comments: :user]) |> Repo.preload(:user)
+    Repo.preload(playlist, :comments)
   end
 
   @doc """
@@ -105,5 +104,9 @@ defmodule Rhapsody.Playlists do
   """
   def change_playlist(%Playlist{} = playlist, attrs \\ %{}) do
     Playlist.changeset(playlist, attrs)
+  end
+
+  def load_users(%Playlist{} = playlist) do
+    playlist = Repo.preload playlist, :users
   end
 end

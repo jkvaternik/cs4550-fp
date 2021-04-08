@@ -1,19 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row } from 'react-bootstrap';
 
 import PlaylistCard from './PlaylistCard/PlaylistCard';
 
-const playlists = [
-  { name: "Roadtrip" },
-  { name: "Shower Playlist" },
-  { name: "Lo-Fi Beats" },
-  { name: "Disney" },
-  { name: "Detroit Techno Thursdays" }
-]
-
-const Home = ({session, token}) => {
+const Home = ({session, token, playlists}) => {
   if (!session || !token) {
     return (
       <section>
@@ -37,4 +29,4 @@ const Home = ({session, token}) => {
   );
 }
 
-export default connect(({ session, token }) => ({ session, token }))(Home);
+export default connect(({ session, token, playlists }) => ({ session, token, playlists}))(Home);

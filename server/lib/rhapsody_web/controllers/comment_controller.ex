@@ -4,6 +4,10 @@ defmodule RhapsodyWeb.CommentController do
   alias Rhapsody.Comments
   alias Rhapsody.Comments.Comment
 
+  alias RhapsodyWeb.Plugs
+  plug Plugs.RequireAuth when action
+   in [:create]
+
   action_fallback RhapsodyWeb.FallbackController
 
   def index(conn, _params) do
@@ -12,6 +16,12 @@ defmodule RhapsodyWeb.CommentController do
   end
 
   def create(conn, %{"comment" => comment_params}) do
+    IO.puts(inspect(comment_params))
+    user = conn.assigns[:current_user]
+    comment_params = comment_params
+    |> Map.put("user_id", user.id)
+    IO.puts(inspect(comment_params))
+    
     with {:ok, %Comment{} = comment} <- Comments.create_comment(comment_params) do
       conn
       |> put_status(:created)

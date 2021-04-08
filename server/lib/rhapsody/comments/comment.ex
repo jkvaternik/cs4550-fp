@@ -4,8 +4,8 @@ defmodule Rhapsody.Comments.Comment do
 
   schema "comments" do
     field :body, :string
-    field :playlist_id, :id
 
+    belongs_to :playlist, Rhapsody.Playlists.Playlist
     belongs_to :user, Rhapsody.Users.User
 
     timestamps()
@@ -14,7 +14,7 @@ defmodule Rhapsody.Comments.Comment do
   @doc false
   def changeset(comment, attrs) do
     comment
-    |> cast(attrs, [:body, :user_id])
-    |> validate_required([:body, :user_id])
+    |> cast(attrs, [:body, :playlist_id, :user_id])
+    |> validate_required([:body, :playlist_id, :user_id])
   end
 end
