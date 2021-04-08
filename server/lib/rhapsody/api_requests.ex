@@ -105,7 +105,7 @@ defmodule Rhapsody.APIRequests do
     
     response = HTTPoison.get!(url,headers)
     response = Poison.decode!(response.body)
-    response["display_name"]
+    response["id"]
 
   end
 
