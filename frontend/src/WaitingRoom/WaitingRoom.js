@@ -22,22 +22,28 @@ const WaitingRoom = ({ session, token }) => {
 
     let history = useHistory();
 
-    if (state.game_started) {
-        console.log(state.players_ready);
-        let playlist = {
-            playlist_name: state.playlist_name,
-            tokens: Array.from(Object.keys(state.players_ready)),
-            genres: state.genres,
+
+    useEffect(() => {
+        if (state.game_started) {
+            console.log(state.players_ready);
+            let playlist = {
+                playlist_name: state.playlist_name,
+                tokens: Array.from(Object.keys(state.players_ready)),
+                genres: state.genres,
+            }
+            create_playlist(playlist).then((resp) => {
+                if (resp["errors"]) {
+                    console.log("errors", resp.errors);
+                }
+                else {
+                    history.push("/");
+                }
+            });
+            state.game_started = false
         }
-        create_playlist(playlist).then((resp) => {
-            if (resp["errors"]) {
-                console.log("errors", resp.errors);
-            }
-            else {
-                history.push("/");
-            }
-        });
-    }
+      },[]);
+
+    
 
     useEffect(() => {
       ch_join(setState);

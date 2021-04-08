@@ -1,4 +1,6 @@
 defmodule Rhapsody.Waiting do
+    alias Rhapsody.APIRequests
+
     def new do
         %{
             playlist_name: "",
@@ -54,6 +56,11 @@ defmodule Rhapsody.Waiting do
 
         players_ready = Map.put(st.players_ready, user, true)
         game_started = Enum.all?(Map.values(players_ready))
+
+        if (game_started) do
+            Rhapsody.APIRequests.createPlaylist(Map.keys(players_ready), st.genres, st.playlist_name)
+        end
+
 
         %{
         
