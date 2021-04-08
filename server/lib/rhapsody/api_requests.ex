@@ -1,5 +1,6 @@
 defmodule Rhapsody.APIRequests do
 
+
   # Gets the three most common genres from a long list of genres (or all of them if less than 3)
   # Can return an empty list, api call still works if that happens
   def getThreeMostCommon(genres) do
@@ -26,6 +27,42 @@ defmodule Rhapsody.APIRequests do
 
       listOfGenres
     end
+  end
+
+
+  ##creates a playlist on spotify for the specific user. Deafults to a public playlist.
+  ##Params
+  ##String token          the autorization token of a user
+  ##String user_id        the user id of a specific user
+  ##String playlist_name  The name of the playlist that is to be created on spotify/
+  def createPlaylistOnSpotify(token, user_id, playlist_name) do
+    url = "https://api.spotify.com/v1/users/" <> user_id <> "/playlists"
+    headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json", "Content-Type": "application/json"]
+    body = Poison.encode!(%{
+      "name": playlist_name,
+      "description": "Test2",
+      "public": true
+    })
+
+    response = HTTPoison.post!(url, body, headers, [])
+
+    response = Poison.decode!(response.body)
+
+    response["id"]
+    
+    
+  end
+
+  def addSongsToPlaylist(token, playlist_id, song_uris) do
+
+    song_uris = Enum.map(song_uris, fn(x) -> "spotify:track:" <> x end)
+    url = "https://api.spotify.com/v1/playlists/" <> playlist_id <> "/tracks"
+    headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json", "Content-Type": "application/json"]
+    body = Poison.encode!(%{
+      "uris": song_uris,
+    })
+
+    HTTPoison.post(url, body, headers, [])
   end
 
   # Return a list of ids of the top TWO artists for the given user
@@ -62,10 +99,51 @@ defmodule Rhapsody.APIRequests do
     output
   end
 
+  def getUserID(token) do
+    url = "https://api.spotify.com/v1/me"
+    headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json", "Content-Type": "application/json"]
+    
+    response = HTTPoison.get!(url,headers)
+    response = Poison.decode!(response.body)
+    response["display_name"]
+
+  end
+
+  ##Root Function to create the playlist on spotify, and create resource for the front end to access.
+  def createPlaylist(tokens, genres, playlist_name) do
+
+    ##get three most common genres
+    genres = getThreeMostCommon(genres)
+
+    ##Get the song recomandations of each person
+    masterPlaylist = Enum.map(tokens, fn x -> getPersonalPlaylist(x, genres) end)
+
+    ##Complile one master playlist
+    masterPlaylist = Enum.reduce(masterPlaylist, fn x, acc -> acc ++ x end)
+    ##TODO REMOVE DUPLICATES
+
+
+    #get the track ids
+    track_ids = Enum.map(masterPlaylist, fn x -> x[:id] end)
+
+    
+    #get thge user id
+    creator_User_ID = getUserID(Enum.at(tokens, 0))
+
+    #create the playlist on spotify
+    playlist_id = createPlaylistOnSpotify(Enum.at(tokens, 0), creator_User_ID, playlist_name)
+
+    ok = addSongsToPlaylist(Enum.at(tokens, 0), playlist_id, track_ids)
+
+
+    masterPlaylist
+
+
+  end
+
   # Returns a list of maps for each song recommendation given a list of genres of any size
   # and an access token, using the top 3 genres and the users top two artists as seeds
-  def doThing(genres,token) do
-    genres = getThreeMostCommon(genres)
+  def getPersonalPlaylist(token,genres) do
     artists = getTopArtists(token)
     getRecommendations(genres,artists,token)
   end
