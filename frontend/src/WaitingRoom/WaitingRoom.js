@@ -3,7 +3,6 @@ import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { ch_ready, ch_genres, ch_join, ch_login } from '../socket';
 import { Col, Row } from 'react-bootstrap';
-import { create_playlist } from '../api';
 
 const WaitingRoom = ({ session, token }) => {
 
@@ -22,28 +21,11 @@ const WaitingRoom = ({ session, token }) => {
 
     let history = useHistory();
 
-
     useEffect(() => {
         if (state.game_started) {
-            console.log(state.players_ready);
-            let playlist = {
-                playlist_name: state.playlist_name,
-                tokens: Array.from(Object.keys(state.players_ready)),
-                genres: state.genres,
-            }
-            create_playlist(playlist).then((resp) => {
-                if (resp["errors"]) {
-                    console.log("errors", resp.errors);
-                }
-                else {
-                    history.push("/");
-                }
-            });
-            state.game_started = false
+            history.push("/");
         }
-      },[]);
-
-    
+    }, [state]);
 
     useEffect(() => {
       ch_join(setState);

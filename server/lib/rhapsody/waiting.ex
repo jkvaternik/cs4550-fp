@@ -58,7 +58,7 @@ defmodule Rhapsody.Waiting do
         game_started = Enum.all?(Map.values(players_ready))
 
         if (game_started) do
-            Rhapsody.APIRequests.createPlaylist(Map.keys(players_ready), st.genres, st.playlist_name)
+            Rhapsody.APIRequests.createPlaylist(Map.keys(players_ready), st.genres, URI.decode(st.playlist_name))
         end
 
 
