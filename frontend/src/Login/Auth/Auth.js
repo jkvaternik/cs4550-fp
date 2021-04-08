@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { api_auth } from '../../api';
 
+// TODO: Create .env file and move client details there
 const Auth = ({ session, token }) => {
   const history = useHistory();
 
@@ -13,11 +14,12 @@ const Auth = ({ session, token }) => {
     if (url.includes("?code=")) {
       let code = url.split("?code=")[1];
 
-      // Pull out oauth code
-      api_auth(code);
-      history.push('/');
+      // FIX: OAUTH bug — don't let it redirect to home without setting token first
+      api_auth(code).then(() => {
+        history.push('/');
+      });
     }
-  }, [])
+  });
 
   if (!session) {
     return (

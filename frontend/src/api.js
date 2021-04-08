@@ -38,7 +38,7 @@ async function api_delete(path, data) {
 
 // AUTH & LOGIN
 export function api_auth(code) {
-  api_post("/auth", { code }).then((data) => {
+  return api_post("/auth", { code }).then((data) => {
     console.log("auth resp", data);
     if (data.access_token) {
       let action = {
