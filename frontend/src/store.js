@@ -75,7 +75,7 @@ function restore_token() {
 function root_reducer(state, action) {
   console.log('root_reducer', state, action);
   let reducer = combineReducers({
-    error, session, token
+    error, session, token, 
   })
   return reducer(state, action)
 }

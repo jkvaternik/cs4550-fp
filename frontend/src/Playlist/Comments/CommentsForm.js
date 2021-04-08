@@ -1,34 +1,49 @@
-import React, { useState } from 'react';
+import React from 'react'; 
 import { Form, Button } from 'react-bootstrap';
-import { create_comment } from '../../../api';
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom';
+import { create_comment } from '../../api';
 
-const CommentForm = ({ postId, updatePost }) => {
-  const [comment, setComment] = useState({ post_id: postId, body: ""});
+function CommentsForm({playlist_id}) { 
 
-  function submitHandler(ev) {
+ const [body, setBody] = useState("");
+ const history = useHistory();
+
+  function onSubmit(ev) {
     ev.preventDefault();
+
+    let comment = {
+        body: body,
+        playlist_id: playlist_id,
+    };
+
     create_comment(comment).then((resp) => {
-      updatePost();
-      setComment({...comment, body: ""});
+      if (resp["errors"]) {
+        console.log("errors", resp.errors);
+      }
+      else {
+        //TODO: refresh playlist
+        console.log("Commented!", resp);
+      }
     });
+
+    setBody("");
+  }
+  
+    return (
+        <Form inline onSubmit={onSubmit} >
+            <Form.Label>Comment:</Form.Label>
+            <Form.Control name="body"
+                            type="text"
+                            onChange={(ev) => setBody(ev.target.value)}
+                            value={body} />
+            <Button variant="primary" type="submit">
+                Submit
+            </Button>
+        </Form>
+    );
   }
 
-  return (
-    <Form onSubmit={submitHandler}>
-      <Form.Group>
-        <Form.Label>Add a comment:</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          type="text"
-          onChange={(ev) => setComment({...comment, body: ev.target.value})}
-          value={comment.body}
-          placeholder="Sounds great!"
-        />
-      </Form.Group>
-      <Button style={{width: '100%'}} type="submit"> Comment </Button>
-    </Form>
-  )
-}
-
-export default CommentForm;
+  
+export default CommentsForm;
+  

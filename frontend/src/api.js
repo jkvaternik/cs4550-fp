@@ -20,6 +20,22 @@ async function api_post(path, data) {
   return await text.json();
 }
 
+async function api_delete(path, data) {
+  let state = store.getState();
+  let token = state?.token;
+
+  let opts = {
+    method: 'DELETE',
+    headers: {
+      'x-auth': token
+    }
+  };
+  
+  return await fetch(
+    "http://localhost:4000/api/v1" + path, opts);
+}
+
+
 // AUTH & LOGIN
 export function api_auth(code) {
   api_post("/auth", { code }).then((data) => {
@@ -84,4 +100,31 @@ export function fetch_playlists() {
     type: 'posts/set',
     data: data,
   }))
+}
+
+// COMMENTS
+export async function create_comment(comment) {
+  let state = store.getState();
+  let token = state?.session?.token;
+
+  let data = new FormData();
+
+  data.append("comment[playlist_id]", comment.playlist_id);
+  data.append("comment[body]", comment.body);
+
+  let opts = {
+    method: 'POST',
+    headers: {
+      'x-auth': token,
+    },
+    body: data,
+  };
+
+  let text = await fetch(
+    "http://localhost:4000/api/v1/comments", opts);
+  return await text.json();
+}
+
+export function delete_comment(id) {
+  return api_delete(`/comments/${id}`);
 }

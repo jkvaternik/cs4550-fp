@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Row, Col, Table } from 'react-bootstrap';
+import CommentsForm from './Comments/CommentsForm';
+import Comments from './Comments/Comments';
 
 const Playlist = () => {
 
@@ -28,8 +30,6 @@ const Playlist = () => {
             </tr>)
         )
 
-    
-
     // useEffect(() => {
     //     // TODO: api get request
     // }, [name])
@@ -52,7 +52,8 @@ const Playlist = () => {
                 <Col>
                     <h6>Creators:</h6>
                     {playlist.users.join(", ")}
-                    <p>Comments</p>
+                    <CommentsForm playlist_id={playlist.id} />
+                    {/* <Comments comments={playlist.comments} /> */}
                 </Col>
             </Row>
 
