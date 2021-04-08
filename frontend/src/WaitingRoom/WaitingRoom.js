@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { ch_ready, ch_genres, ch_join, ch_login } from '../socket';
 import { Col, Row } from 'react-bootstrap';
+import { create_playlist } from '../api';
 
 const WaitingRoom = ({ session, token }) => {
 
@@ -14,7 +15,7 @@ const WaitingRoom = ({ session, token }) => {
 
     const [state, setState] = useState({
       playlist_name: null,
-      //players_ready: {},
+      players_ready: new Map(),
       game_started: false,
       genres: [],
     });
@@ -22,8 +23,20 @@ const WaitingRoom = ({ session, token }) => {
     let history = useHistory();
 
     if (state.game_started) {
-        // TODO: add api request to create playlist
-        history.push("/");
+        console.log(state.players_ready);
+        let playlist = {
+            playlist_name: state.playlist_name,
+            tokens: Array.from(Object.keys(state.players_ready)),
+            genres: state.genres,
+        }
+        create_playlist(playlist).then((resp) => {
+            if (resp["errors"]) {
+                console.log("errors", resp.errors);
+            }
+            else {
+                history.push("/");
+            }
+        });
     }
 
     useEffect(() => {
@@ -53,7 +66,8 @@ const WaitingRoom = ({ session, token }) => {
     function onClick() {
         if (!(playlist === "")) {
             let name = encodeURI(playlist);
-            ch_login(session.user_id, name);
+            console.log(token);
+            ch_login(token["access_token"], name);
         }
       }
 

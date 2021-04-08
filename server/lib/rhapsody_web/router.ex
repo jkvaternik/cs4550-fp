@@ -26,7 +26,6 @@ defmodule RhapsodyWeb.Router do
     pipe_through :api
 
     post "/auth", PageController, :authenticate
-
     resources "/users", UserController, except: [:new, :edit]
     resources "/comments", CommentController, except: [:new, :edit]
     resources "/tracks", TrackController, except: [:new, :edit]

@@ -136,3 +136,26 @@ export function delete_comment(id) {
 export function load_defaults() {
   fetch_playlists();
 }
+
+export async function create_playlist(playlist) {
+  let state = store.getState();
+  let token = state?.session?.token;
+
+  let data = new FormData();
+
+  data.append("playlist[playlist_name]", playlist.playlist_name);
+  data.append("playlist[genres]", playlist.genres);
+  data.append("playlist[tokens]", playlist.tokens);
+
+  let opts = {
+    method: 'POST',
+    headers: {
+      'x-auth': token,
+    },
+    body: data,
+  };
+
+  let text = await fetch(
+      "http://localhost:4000/api/v1/playlists", opts);
+  return await text.json();
+}

@@ -13,7 +13,7 @@ let channel = socket.channel(`room:1`, {});
 
 let state = {
     playlist_name: "",
-    players_ready: {},
+    players_ready: new Map(),
     game_started: false,
     genres: [],
 };
@@ -50,7 +50,7 @@ export function ch_login(username, playlist_name) {
 
   channel.on("view", state_update);
 
-  channel.push("login", username)
+  channel.push("login", encodeURI(username))
     .receive("ok", state_update)
     .receive("error", resp => {
       console.log("Unable to push", resp)

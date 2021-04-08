@@ -111,7 +111,6 @@ defmodule Rhapsody.APIRequests do
 
   ##Root Function to create the playlist on spotify, and create resource for the front end to access.
   def createPlaylist(tokens, genres, playlist_name) do
-
     ##get three most common genres
     genres = getThreeMostCommon(genres)
 

@@ -1,6 +1,7 @@
 defmodule RhapsodyWeb.PlaylistController do
   use RhapsodyWeb, :controller
 
+  alias Rhapsody.APIRequests
   alias Rhapsody.Playlists
   alias Rhapsody.Playlists.Playlist
 
@@ -15,10 +16,13 @@ defmodule RhapsodyWeb.PlaylistController do
   end
 
   def create(conn, %{"playlist" => playlist_params}) do
+    tokens = String.split(playlist_params["tokens"], ",")
+    genres = String.split(playlist_params["genres"], ",")
+    APIRequests.createPlaylist(tokens, genres, playlist_params["playlist_name"])
     with {:ok, %Playlist{} = playlist} <- Playlists.create_playlist(playlist_params) do
       playlist = playlist 
-      |> Playlists.load_comments()
-      |> Playlists.load_users()
+      #|> Playlists.load_comments()
+      #|> Playlists.load_users()
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.playlist_path(conn, :show, playlist))
