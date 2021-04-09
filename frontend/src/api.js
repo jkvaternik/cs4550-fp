@@ -1,6 +1,6 @@
 import store from './store';
 
-const url = process.env.NODE_ENV === 'production' ? 'http://rhapsody.onb6.fun/api/v1' : 'http://localhost:4000/api/v1';
+const url = process.env.NODE_ENV === 'production' ? 'http://rhapsody-backend.onb6.fun/api/v1' : 'http://localhost:4000/api/v1';
 
 async function api_get(path) {
   let text = await fetch(
