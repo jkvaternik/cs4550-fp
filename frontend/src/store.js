@@ -31,7 +31,6 @@ function save_session(sess) {
 
 function restore_session() {
   let sessionItem = localStorage.getItem('session');
-  console.log("Session", sessionItem)
   if (!sessionItem) {
     return null;
   }
@@ -66,7 +65,6 @@ function save_token(authToken) {
 
 function restore_token() {
   let tokenItem = localStorage.getItem('token');
-  console.log("Token", tokenItem)
   if (!tokenItem) {
     return null;
   }

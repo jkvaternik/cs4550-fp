@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import { Row } from 'react-bootstrap';
 
 import PlaylistCard from './PlaylistCard/PlaylistCard';
+import { load_defaults } from '../api';
 
 const Home = ({session, token, playlists}) => {
+  useEffect(() => load_defaults(), [])
+
   if (!session || !token) {
     return (
       <section>

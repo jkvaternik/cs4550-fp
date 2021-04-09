@@ -14,26 +14,29 @@ const Playlist = () => {
         name: "",
         description: "",
         tracks: [],
-        comments: [
-            {}
-        ],
+        comments: [],
         users: ["olivia", "jaime", "jim", "jamie"]
     })
 
     const songRows = playlist.tracks.map(s =>
-            (<tr>
+            (<tr key={s.id}>
+                <td><img src={s.track_picture}></img></td>
                 <td>{s.name}</td>
                 {/* <td>{s.album}</td> */}
                 <td>{s.artist}</td>
             </tr>)
-        )
+    );
+
+    const updatePlaylist = () => {
+            fetch_playlist(playlist.id).then((res) => {
+                setPlaylist({...res, name: decodeURI(res.name)});
+            });
+          }
 
     useEffect(() => {
         fetch_playlist(id).then(res => {
-            console.log(res);
             setPlaylist({...res, name: decodeURI(res.name)});
         });
-        console.log(playlist)
     }, [id])
 
     return (
@@ -43,19 +46,25 @@ const Playlist = () => {
             <Row>
                 <Col sm={8}>
                     <Table>
+                        <thead>
                         <tr>
+                            <th></th>
                             <th>Song Name</th>
                             {/* <th>Album</th> */}
                             <th>Artist</th>
                         </tr>
-                        {songRows}
+                        </thead>
+                        <tbody>
+                            {songRows}
+                        </tbody>
+                    
                     </Table>
                 </Col>
                 <Col>
                     <h6>Creators:</h6>
                     {/* {playlist.users.join(", ")} */}
-                    <CommentsForm playlist_id={playlist.id} />
-                    {/* <Comments comments={playlist.comments} /> */}
+                    <CommentsForm playlist_id={playlist.id} updatePlaylist={updatePlaylist}/>
+                    <Comments comments={playlist.comments} updatePlaylist={updatePlaylist}/>
                 </Col>
             </Row>
 

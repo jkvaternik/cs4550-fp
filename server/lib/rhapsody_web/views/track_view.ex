@@ -14,7 +14,8 @@ defmodule RhapsodyWeb.TrackView do
     %{id: track.id,
       name: track.name,
       artist: track.artist,
-      spotifyID: track.spotifyID
+      spotifyID: track.spotifyID, 
+      track_picture: track.track_picture
     }
   end
 end

@@ -16,22 +16,22 @@ defmodule RhapsodyWeb.CommentController do
   end
 
   def create(conn, %{"comment" => comment_params}) do
-    IO.puts(inspect(comment_params))
     user = conn.assigns[:current_user]
     comment_params = comment_params
     |> Map.put("user_id", user.id)
-    IO.puts(inspect(comment_params))
+    IO.puts(inspect(user))
     
     with {:ok, %Comment{} = comment} <- Comments.create_comment(comment_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.comment_path(conn, :show, comment))
-      |> render("show.json", comment: comment)
+      |> send_resp(:ok, Jason.encode!(%{}))
     end
   end
 
   def show(conn, %{"id" => id}) do
     comment = Comments.get_comment!(id)
+    |> Comments.load_user()
     render(conn, "show.json", comment: comment)
   end
 

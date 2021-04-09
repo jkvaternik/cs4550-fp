@@ -50,7 +50,6 @@ defmodule RhapsodyWeb.RoomChannel do
     {:reply, {:ok, view}, socket}
   end
 
-
   @impl true
   def handle_in("reset", _, socket) do
     view = socket.assigns[:name]

@@ -2,9 +2,9 @@ import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { create_comment } from '../../api';
+import { create_comment, fetch_playlists } from '../../api';
 
-function CommentsForm({playlist_id}) { 
+function CommentsForm({playlist_id, updatePlaylist}) { 
 
  const [body, setBody] = useState("");
  const history = useHistory();
@@ -22,8 +22,7 @@ function CommentsForm({playlist_id}) {
         console.log("errors", resp.errors);
       }
       else {
-        //TODO: refresh playlist
-        console.log("Commented!", resp);
+        updatePlaylist();
       }
     });
 
@@ -31,13 +30,13 @@ function CommentsForm({playlist_id}) {
   }
   
     return (
-        <Form inline onSubmit={onSubmit} >
+        <Form onSubmit={onSubmit} >
             <Form.Label>Comment:</Form.Label>
             <Form.Control name="body"
                             type="text"
                             onChange={(ev) => setBody(ev.target.value)}
                             value={body} />
-            <Button variant="primary" type="submit">
+            <Button style={{ marginTop: "16px", marginBottom: "16px", width: "100%" }} variant="primary" type="submit">
                 Submit
             </Button>
         </Form>

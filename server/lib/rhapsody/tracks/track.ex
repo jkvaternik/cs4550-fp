@@ -6,6 +6,7 @@ defmodule Rhapsody.Tracks.Track do
     field :artist, :string
     field :name, :string
     field :spotifyID, :string
+    field :track_picture, :string
 
     belongs_to :playlist, Rhapsody.Playlists.Playlist
 
@@ -15,7 +16,7 @@ defmodule Rhapsody.Tracks.Track do
   @doc false
   def changeset(track, attrs) do
     track
-    |> cast(attrs, [:name, :artist, :spotifyID, :playlist_id])
-    |> validate_required([:name, :artist, :spotifyID, :playlist_id])
+    |> cast(attrs, [:name, :artist, :spotifyID, :playlist_id, :track_picture])
+    |> validate_required([:name, :artist, :spotifyID, :playlist_id, :track_picture])
   end
 end

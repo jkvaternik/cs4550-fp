@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import { Card, Button } from 'react-bootstrap';
 import { delete_comment } from '../../api';
 
-const Comments = ({ session, comments }) => {
+const Comments = ({ session, comments, updatePlaylist }) => {
+
+  
 
   let comms = comments.map((comm) => {
+    
     return (
       <Card key={comm.id} style={{marginBottom: '10px'}}>
         <Card.Body>
@@ -16,9 +19,9 @@ const Comments = ({ session, comments }) => {
           <Card.Text>
             {comm.body}
           </Card.Text>
-          {(session.user_id === comm.user.id) && 
+          {(session.user_id === comm.user.id) &&  
           <Button
-            onClick = {() => delete_comment(comm.id)}
+            onClick = {() => delete_comment(comm.id).then(() => updatePlaylist())}
             variant="link"
             style={{ float: "right" }}>
             Delete

@@ -10,7 +10,6 @@ socket.connect()
 // Now that you are connected, you can join channels with a topic:a
 let channel = socket.channel(`room:1`, {}); 
 
-
 let state = {
     playlist_name: "",
     players_ready: new Map(),
@@ -80,6 +79,23 @@ export function ch_notReady() {
     .receive("error", resp => {
       console.log("Unable to push", resp)
     });
+}
+
+export function ch_leave() {
+  let channel = socket.channel(`room:1`, {}); 
+
+  let state = {
+    playlist_name: "",
+    players_ready: new Map(),
+    game_started: false,
+    genres: [],
+  };
+
+  channel.join()
+    .receive("ok", state_update)
+    .receive("error", resp => {
+      console.log("Unable to join", resp)
+    })
 }
 
 channel.join()

@@ -66,7 +66,7 @@ defmodule Rhapsody.Waiting do
             play = Playlists.get_playlist_by_name(st.playlist_name)
             IO.inspect(play)
 
-            Enum.each(playlist, fn pl -> Tracks.create_track(%{artist: pl.artist, spotifyID: pl.id, name: pl.name, playlist_id: play.id}) end)
+            Enum.each(playlist, fn pl -> Tracks.create_track(%{artist: pl.artist, spotifyID: pl.id, name: pl.name, playlist_id: play.id, track_picture: pl.track_picture}) end)
         end
 
 

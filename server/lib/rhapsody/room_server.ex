@@ -58,7 +58,7 @@ defmodule Rhapsody.RoomServer do
   def game_ready(name) do
     GenServer.call(reg(name), {:game_ready, name})
   end
-
+  
   # implementation
 
   def init(game) do
