@@ -1,4 +1,5 @@
 defmodule Rhapsody.APIRequests do
+  alias Rhapsody.Playlists
 
 
   # Gets the three most common genres from a long list of genres (or all of them if less than 3)
@@ -111,6 +112,30 @@ defmodule Rhapsody.APIRequests do
 
   end
 
+  def pushPlaylistToSpotify(token, resource_playlist_id) do
+
+    playlistToPush = Rhapsody.Playlists.get_playlist!(resource_playlist_id)
+
+    playlistToPush = Rhapsody.Playlists.load_playlist(playlistToPush)
+
+
+
+
+    #get the track ids
+    # track_ids = Enum.map(masterPlaylist, fn x -> x[:id] end)
+    track_ids = []
+    
+    # #get thge user id
+    # creator_User_ID = getUserID(token)
+
+    # #create the playlist on spotify
+    # playlist_id = createPlaylistOnSpotify(token, creator_User_ID, playlist_name)
+
+    # ok = addSongsToPlaylist(token, playlist_id, track_ids)
+    
+    playlistToPush
+  end
+
   ##Root Function to create the playlist on spotify, and create resource for the front end to access.
   def createPlaylist(tokens, genres, playlist_name) do
     ##get three most common genres
@@ -124,17 +149,7 @@ defmodule Rhapsody.APIRequests do
     ##TODO REMOVE DUPLICATES
 
 
-    #get the track ids
-    track_ids = Enum.map(masterPlaylist, fn x -> x[:id] end)
-
     
-    #get thge user id
-    creator_User_ID = getUserID(Enum.at(tokens, 0))
-
-    #create the playlist on spotify
-    playlist_id = createPlaylistOnSpotify(Enum.at(tokens, 0), creator_User_ID, playlist_name)
-
-    ok = addSongsToPlaylist(Enum.at(tokens, 0), playlist_id, track_ids)
 
     masterPlaylist
 
