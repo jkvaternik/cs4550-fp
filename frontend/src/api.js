@@ -1,8 +1,10 @@
 import store from './store';
 
+const url = process.env.NODE_ENV === 'production' ? 'http://rhapsody.onb6.fun/api/v1' : 'http://localhost:4000/api/v1';
+
 async function api_get(path) {
   let text = await fetch(
-    "http://localhost:4000/api/v1" + path, {});
+    url + path, {});
   let resp = await text.json();
   return resp.data;
 }
@@ -16,7 +18,7 @@ async function api_post(path, data) {
     body: JSON.stringify(data),
   };
   let text = await fetch(
-    "http://localhost:4000/api/v1" + path, opts);
+    url + path, opts);
   return await text.json();
 }
 
@@ -32,7 +34,7 @@ async function api_delete(path, data) {
   };
   
   return await fetch(
-    "http://localhost:4000/api/v1" + path, opts);
+    url + path, opts);
 }
 
 
@@ -125,7 +127,7 @@ export async function create_comment(comment) {
   };
 
   let text = await fetch(
-    "http://localhost:4000/api/v1/comments", opts);
+    `${url}/comments`, opts);
   return await text.json();
 }
 
@@ -156,7 +158,7 @@ export async function create_playlist(playlist) {
   };
 
   let text = await fetch(
-      "http://localhost:4000/api/v1/playlists", opts);
+    `${url}/playlists`, opts);
   return await text.json();
 }
 
@@ -179,6 +181,6 @@ export async function add_playlist_to_spotify(playlist_id) {
   };
 
   let text = await fetch(
-      "http://localhost:4000/api/v1/spotify", opts);
+    `${url}/spotify`, opts);
   return await text;
 }
