@@ -78,11 +78,13 @@ defmodule Rhapsody.APIRequests do
 
   # Outputs a map for a song object from spotify containing name, id, and artist name
   # To be given to the frontend/stored in a resource
-  def getSongInfo(track) do
+  def getSongInfo(token, track) do
     output = %{}
     output = Map.put(output,:id,track["id"])
     output = Map.put(output,:name,track["name"])
     output = Map.put(output,:artist,List.first(track["artists"])["name"])
+    output = Map.put(output,:track_picture, getTrackPicture(token, track["id"]))
+    output
   end
 
   # Returns a list of maps for each song recommendation given a list of genres,
@@ -95,7 +97,7 @@ defmodule Rhapsody.APIRequests do
     headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json", "Content-Type": "application/json"]
     response = HTTPoison.get!(url,headers)
     response = Poison.decode!(response.body)
-    output = Enum.map(response["tracks"], fn x -> getSongInfo(x) end)
+    output = Enum.map(response["tracks"], fn x -> getSongInfo(token, x) end)
     output
   end
 
@@ -137,6 +139,16 @@ defmodule Rhapsody.APIRequests do
 
     masterPlaylist
 
+
+  end
+
+  def getTrackPicture(token, trackID) do
+    url = "https://api.spotify.com/v1/tracks/" <> trackID
+    headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json", "Content-Type": "application/json"]
+    
+    response = HTTPoison.get!(url,headers)
+    response = Poison.decode!(response.body)
+    Enum.at(response["album"]["images"], 2)["url"]
 
   end
 
