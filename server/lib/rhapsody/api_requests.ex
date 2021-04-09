@@ -40,7 +40,7 @@ defmodule Rhapsody.APIRequests do
     headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json", "Content-Type": "application/json"]
     body = Poison.encode!(%{
       "name": playlist_name,
-      "description": "Test2",
+      "description": "This Playlist Was Created Using Rhapsody!",
       "public": true
     })
 
@@ -135,7 +135,6 @@ defmodule Rhapsody.APIRequests do
     playlist_id = createPlaylistOnSpotify(Enum.at(tokens, 0), creator_User_ID, playlist_name)
 
     ok = addSongsToPlaylist(Enum.at(tokens, 0), playlist_id, track_ids)
-
 
     masterPlaylist
 

@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import { api_auth } from '../../api';
 
-// TODO: Create .env file and move client details there
 const Auth = ({ session, token }) => {
   const history = useHistory();
+  const clientId = process.env.REACT_APP_CLIENT_ID;
+  const redirectUri = process.env.REACT_APP_REDIRECT_URI;
 
   useEffect(() => {
     const url = window.location.href;
@@ -38,7 +39,7 @@ const Auth = ({ session, token }) => {
   return (
     <section>
       <a
-        href="https://accounts.spotify.com/authorize?client_id=006d7532893548a89635c04a92dd1fe6&response_type=code&redirect_uri=http://localhost:3000/auth&scope=user-top-read%20user-top-read%20playlist-modify-public"
+        href={`https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=user-top-read%20playlist-modify-public`}
       >
         Login with Spotify
       </a>

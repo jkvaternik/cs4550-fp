@@ -23,7 +23,6 @@ const Home = ({session, token, playlists}) => {
 
   return (
     <section>
-      <p>Access Token: {token.access_token}</p>
       <Row>
         { playlistCards }
       </Row>
