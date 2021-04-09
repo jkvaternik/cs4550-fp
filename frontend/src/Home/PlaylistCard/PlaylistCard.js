@@ -7,8 +7,8 @@ const PlaylistCard = ({ playlist }) => {
     <Col className="col-sm-4" style={{ display: 'inline', marginBottom: '30px' }}>
       <Card>
         <Card.Body>
-          <Card.Title style={{color: '#ffffff'}}>{playlist.name}</Card.Title>
-          <Link></Link>
+          <Card.Title style={{color: '#ffffff'}}>{decodeURI(playlist.name)}</Card.Title>
+          <Link to={`/playlist/${playlist.id}`}>Go to playlist</Link>
         </Card.Body>
       </Card>
     </Col>

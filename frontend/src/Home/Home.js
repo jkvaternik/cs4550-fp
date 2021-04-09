@@ -14,6 +14,8 @@ const Home = ({session, token, playlists}) => {
     )
   }
 
+  console.log(playlists);
+
   const playlistCards = playlists.map((pl, i) => <PlaylistCard key={i} playlist={pl} />)
 
   return (

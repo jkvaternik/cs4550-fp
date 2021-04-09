@@ -13,21 +13,17 @@ const Playlist = () => {
         id: 1,
         name: "",
         description: "",
-        songs: [
-            {name: "The poop song", artist: "Learning Resource Center", album: "The poop song"},
-            {name: "Don't Worry", artist: "Madcon", album: "IDK"},
-            {name: "Big Time Rush", artist: "Big Time Rush", album: "Big Time Rush"}
-        ],
+        tracks: [],
         comments: [
             {}
         ],
         users: ["olivia", "jaime", "jim", "jamie"]
     })
 
-    const songRows = playlist.songs.map(s =>
+    const songRows = playlist.tracks.map(s =>
             (<tr>
                 <td>{s.name}</td>
-                <td>{s.album}</td>
+                {/* <td>{s.album}</td> */}
                 <td>{s.artist}</td>
             </tr>)
         )
@@ -35,7 +31,7 @@ const Playlist = () => {
     useEffect(() => {
         fetch_playlist(id).then(res => {
             console.log(res);
-            setPlaylist({...playlist, ...res});
+            setPlaylist({...res, name: decodeURI(res.name)});
         });
         console.log(playlist)
     }, [id])
@@ -49,7 +45,7 @@ const Playlist = () => {
                     <Table>
                         <tr>
                             <th>Song Name</th>
-                            <th>Album</th>
+                            {/* <th>Album</th> */}
                             <th>Artist</th>
                         </tr>
                         {songRows}
@@ -57,7 +53,7 @@ const Playlist = () => {
                 </Col>
                 <Col>
                     <h6>Creators:</h6>
-                    {playlist.users.join(", ")}
+                    {/* {playlist.users.join(", ")} */}
                     <CommentsForm playlist_id={playlist.id} />
                     {/* <Comments comments={playlist.comments} /> */}
                 </Col>
