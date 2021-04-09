@@ -4,6 +4,7 @@ defmodule RhapsodyWeb.PlaylistView do
   alias RhapsodyWeb.CommentView
   alias RhapsodyWeb.UserView
   alias RhapsodyWeb.TrackView
+  alias RhapsodyWeb.ContributorView
 
   def render("index.json", %{playlists: playlists}) do
     %{data: render_many(playlists, PlaylistView, "playlist.json")}
@@ -18,6 +19,7 @@ defmodule RhapsodyWeb.PlaylistView do
       name: playlist.name,
       description: playlist.description,
       comments: render_many(playlist.comments, CommentView, "comment.json"),
-      tracks: render_many(playlist.tracks, TrackView, "track.json")}
+      tracks: render_many(playlist.tracks, TrackView, "track.json"),
+      contributors: render_many(playlist.contributors, ContributorView, "contributor_user.json")}
   end
 end

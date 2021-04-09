@@ -10,6 +10,7 @@ defmodule Rhapsody.Users.User do
     field :password_hash, :string
 
     has_many :comments, Rhapsody.Comments.Comment
+    has_many :contributors, Rhapsody.Contributors.Contributor
 
     timestamps()
   end

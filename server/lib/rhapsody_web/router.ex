@@ -28,6 +28,7 @@ defmodule RhapsodyWeb.Router do
     post "/auth", PageController, :authenticate
     resources "/users", UserController, except: [:new, :edit]
     resources "/comments", CommentController, except: [:new, :edit]
+    resources "/contributors", ContributorController, except: [:new, :edit, :update]
     resources "/tracks", TrackController, except: [:new, :edit]
     resources "/playlists", PlaylistController, except: [:new, :edit]
     resources "/spotify", SpotifyController, only: [:create]

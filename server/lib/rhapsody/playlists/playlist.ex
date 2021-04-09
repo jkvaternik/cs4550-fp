@@ -8,6 +8,7 @@ defmodule Rhapsody.Playlists.Playlist do
 
     has_many :comments, Rhapsody.Comments.Comment
     has_many :tracks, Rhapsody.Tracks.Track
+    has_many :contributors, Rhapsody.Contributors.Contributor
 
     timestamps()
   end
