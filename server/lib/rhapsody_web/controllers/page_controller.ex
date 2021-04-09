@@ -5,16 +5,19 @@ defmodule RhapsodyWeb.PageController do
 
   use RhapsodyWeb, :controller
 
-  @client_id "006d7532893548a89635c04a92dd1fe6"
-  @secret "5494091e5f3e42038eb1853784834cbb"
-
   def index(conn, _params) do
     render(conn, "index.html", current_user: get_session(conn, :current_user))
   end
 
   def authenticate(conn, %{"code" => code}) do
+    client_id = System.get_env("REACT_APP_CLIENT_ID")
+    secret = System.get_env("REACT_APP_CLIENT_SECRET")
+
+    IO.inspect(client_id)
+    IO.inspect(secret)
+
     {:ok, resp} = HTTPoison.post("https://accounts.spotify.com/api/token", params(code),  [
-      {"Authorization", "Basic #{:base64.encode("#{@client_id}:#{@secret}")}"},
+      {"Authorization", "Basic #{:base64.encode("#{client_id}:#{secret}")}"},
       {"Content-Type", "application/x-www-form-urlencoded"}
     ])
 

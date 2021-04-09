@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import { ch_ready, ch_genres, ch_join, ch_login } from '../socket';
 import { Col, Row } from 'react-bootstrap';
 
+const SPOTIFY_GENRES = [
+  // Fill this with Genres
+]
+
+
 const WaitingRoom = ({ session, token }) => {
 
     const [playlist, setPlaylist] = useState("");
