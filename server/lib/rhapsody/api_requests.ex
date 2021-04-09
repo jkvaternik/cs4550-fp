@@ -90,10 +90,10 @@ defmodule Rhapsody.APIRequests do
 
   # Returns a list of maps for each song recommendation given a list of genres,
   # artists, and an access token
-  def getRecommendations(genres,artists,token) do
+  def getRecommendations(genres,artists,token,song_count) do
     genre_param = "seed_genres=" <> Enum.join(genres, "%2C")
     artists_param = "seed_artists=" <> Enum.join(artists, "%2C")
-    song_limit = "5"
+    song_limit = Integer.to_string(song_count)
     url = "https://api.spotify.com/v1/recommendations?limit=" <> song_limit <> "&" <> genre_param <> "&" <> artists_param
     headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json", "Content-Type": "application/json"]
     response = HTTPoison.get!(url,headers)
@@ -137,8 +137,11 @@ defmodule Rhapsody.APIRequests do
     ##get three most common genres
     genres = getThreeMostCommon(genres)
 
+    ## Set the total number of songs for the playlist
+    total_songs = 50
+
     ##Get the song recomandations of each person
-    masterPlaylist = Enum.map(tokens, fn x -> getPersonalPlaylist(x, genres) end)
+    masterPlaylist = Enum.map(tokens, fn x -> getPersonalPlaylist(x, genres, Integer.floor_div(total_songs,length(tokens))) end)
 
     ##Complile one master playlist
     masterPlaylist = Enum.reduce(masterPlaylist, fn x, acc -> acc ++ x end)
@@ -161,9 +164,9 @@ defmodule Rhapsody.APIRequests do
 
   # Returns a list of maps for each song recommendation given a list of genres of any size
   # and an access token, using the top 3 genres and the users top two artists as seeds
-  def getPersonalPlaylist(token,genres) do
+  def getPersonalPlaylist(token,genres,song_count) do
     artists = getTopArtists(token)
-    getRecommendations(genres,artists,token)
+    getRecommendations(genres,artists,token,song_count)
   end
 
 end

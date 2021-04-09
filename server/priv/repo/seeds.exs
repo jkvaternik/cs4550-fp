@@ -21,6 +21,6 @@ defmodule Inject do
   end
 end
 
-jimbo = Inject.user("jimbo", "jimbo@gmail.com", "password")
-playlist = Repo.insert!(%Playlist{name: "Olivia's Playlist", description: "really good songs"})
+_jimbo = Inject.user("jimbo", "jimbo@gmail.com", "password")
+_playlist = Repo.insert!(%Playlist{name: "Olivia's Playlist", description: "really good songs"})
 
