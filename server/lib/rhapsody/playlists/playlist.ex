@@ -6,7 +6,6 @@ defmodule Rhapsody.Playlists.Playlist do
     field :description, :string
     field :name, :string
 
-    has_many :users, Rhapsody.Users.User
     has_many :comments, Rhapsody.Comments.Comment
     has_many :tracks, Rhapsody.Tracks.Track
 

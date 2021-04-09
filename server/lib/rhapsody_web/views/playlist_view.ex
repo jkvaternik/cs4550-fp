@@ -19,6 +19,5 @@ defmodule RhapsodyWeb.PlaylistView do
       description: playlist.description,
       comments: render_many(playlist.comments, CommentView, "comment.json"),
       tracks: render_many(playlist.tracks, TrackView, "track.json")}
-      # users: render_many(playlist.users, UserView, "user.json")}
   end
 end

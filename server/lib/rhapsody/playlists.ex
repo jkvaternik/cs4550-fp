@@ -25,7 +25,6 @@ defmodule Rhapsody.Playlists do
     playlist
     |> Repo.preload(:comments)
     |> Repo.preload(:tracks)
-
   end
 
   @doc """
