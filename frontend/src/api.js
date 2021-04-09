@@ -159,3 +159,26 @@ export async function create_playlist(playlist) {
       "http://localhost:4000/api/v1/playlists", opts);
   return await text.json();
 }
+
+export async function add_playlist_to_spotify(playlist_id) {
+  let state = store.getState();
+  let session_token = state?.session.token
+  let token = state?.token.access_token
+
+  let data = new FormData();
+
+  data.append("request[token]", token);
+  data.append("request[playlist_id]", playlist_id);
+
+  let opts = {
+    method: 'POST',
+    headers: {
+      'x-auth': session_token,
+    },
+    body: data,
+  };
+
+  let text = await fetch(
+      "http://localhost:4000/api/v1/spotify", opts);
+  return await text;
+}

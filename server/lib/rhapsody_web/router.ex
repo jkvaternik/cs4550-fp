@@ -30,6 +30,7 @@ defmodule RhapsodyWeb.Router do
     resources "/comments", CommentController, except: [:new, :edit]
     resources "/tracks", TrackController, except: [:new, :edit]
     resources "/playlists", PlaylistController, except: [:new, :edit]
+    resources "/spotify", SpotifyController, only: [:create]
     resources "/sessions", SessionController,
       only: [:create, :delete], singleton: true
   end

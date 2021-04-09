@@ -118,20 +118,16 @@ defmodule Rhapsody.APIRequests do
 
     playlistToPush = Rhapsody.Playlists.load_playlist(playlistToPush)
 
-
-
-
     #get the track ids
-    # track_ids = Enum.map(masterPlaylist, fn x -> x[:id] end)
-    track_ids = []
-    
+    track_ids = Enum.map(playlistToPush.tracks, fn x -> x.spotifyID end)
     # #get thge user id
-    # creator_User_ID = getUserID(token)
+    creator_User_ID = getUserID(token)
 
     # #create the playlist on spotify
-    # playlist_id = createPlaylistOnSpotify(token, creator_User_ID, playlist_name)
+    name = URI.decode(playlistToPush.name)
+    playlist_id = createPlaylistOnSpotify(token, creator_User_ID, name)
 
-    # ok = addSongsToPlaylist(token, playlist_id, track_ids)
+    ok = addSongsToPlaylist(token, playlist_id, track_ids)
     
     playlistToPush
   end
@@ -147,9 +143,6 @@ defmodule Rhapsody.APIRequests do
     ##Complile one master playlist
     masterPlaylist = Enum.reduce(masterPlaylist, fn x, acc -> acc ++ x end)
     ##TODO REMOVE DUPLICATES
-
-
-    
 
     masterPlaylist
 
