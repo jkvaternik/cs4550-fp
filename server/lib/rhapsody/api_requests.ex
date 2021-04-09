@@ -6,16 +6,11 @@ defmodule Rhapsody.APIRequests do
   # Can return an empty list, api call still works if that happens
   def getThreeMostCommon(genres) do
 
-    if length(Enum.uniq(genres)) < 3 do
+    if length(Enum.uniq(genres)) < 2 do
       Enum.uniq(genres)
     else
       listOfGenres = []
       mapOfGenres = Enum.frequencies(genres)
-
-      amountOne = Enum.max_by(mapOfGenres, fn ({key, value}) -> value end)
-      val = Enum.at(Tuple.to_list(amountOne),0)
-      mapOfGenres = Map.delete(mapOfGenres, val)
-      listOfGenres = listOfGenres ++ [val]
 
       amountOne = Enum.max_by(mapOfGenres, fn ({key, value}) -> value end)
       val = Enum.at(Tuple.to_list(amountOne),0)
@@ -69,7 +64,7 @@ defmodule Rhapsody.APIRequests do
   # Return a list of ids of the top TWO artists for the given user
   # To be combined with three genres as seeds to the recommender
   def getTopArtists(token) do
-    url = "https://api.spotify.com/v1/me/top/artists?limit=2"
+    url = "https://api.spotify.com/v1/me/top/artists?limit=3"
     headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json", "Content-Type": "application/json"]
     response = HTTPoison.get!(url,headers)
     response = Poison.decode!(response.body)
