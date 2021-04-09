@@ -24,6 +24,7 @@ defmodule Rhapsody.Playlists do
   def load_playlist(%Playlist{} = playlist) do
     playlist
     |> Repo.preload([comments: :user])
+    |> Repo.preload([contributors: :user])
     |> Repo.preload(:tracks)
   end
 

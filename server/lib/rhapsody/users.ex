@@ -21,6 +21,12 @@ defmodule Rhapsody.Users do
     Repo.all(User)
   end
 
+  def load_user(%User{} = user) do
+    user
+    |> Repo.preload([comments: [playlist: [contributors: [:user], comments: [:user], tracks: []]]])
+    |> Repo.preload([contributors: [playlist: [contributors: [:user], comments: [:user], tracks: []]]])
+  end
+
   @doc """
   Gets a single user.
 

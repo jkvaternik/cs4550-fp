@@ -8,6 +8,7 @@ defmodule RhapsodyWeb.UserController do
 
   def index(conn, _params) do
     users = Users.list_users()
+    # users = Enum.map(users, fn user -> Users.load_user(user) end)
     render(conn, "index.json", users: users)
   end
 
@@ -21,7 +22,7 @@ defmodule RhapsodyWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Users.get_user!(id)
+    user = Users.get_user!(id) |> Users.load_user
     render(conn, "show.json", user: user)
   end
 
