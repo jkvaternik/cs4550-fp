@@ -55,6 +55,10 @@ defmodule Rhapsody.RoomServer do
     GenServer.call(reg(name), {:not_ready, name, user})
   end
 
+  def addUser(name, user) do
+    GenServer.call(reg(name), {:addUser, name, user})
+  end
+
   def game_ready(name) do
     GenServer.call(reg(name), {:game_ready, name})
   end
@@ -101,6 +105,12 @@ defmodule Rhapsody.RoomServer do
 
   def handle_call({:not_ready, name, user}, _from, room) do
     room = Waiting.notReady(room, user)
+    BackupAgent.put(name, room)
+    {:reply, room, room}
+  end
+
+  def handle_call({:addUser, name, user}, _from, room) do
+    room = Waiting.addUser(room, user)
     BackupAgent.put(name, room)
     {:reply, room, room}
   end

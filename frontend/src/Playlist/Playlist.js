@@ -15,7 +15,7 @@ const Playlist = () => {
         description: "",
         tracks: [],
         comments: [],
-        users: ["olivia", "jaime", "jim", "jamie"]
+        contributors: []
     })
 
     const [spotify, setSpotify] = useState(null);
@@ -24,7 +24,6 @@ const Playlist = () => {
             (<tr key={s.id}>
                 <td><img src={s.track_picture}></img></td>
                 <td>{s.name}</td>
-                {/* <td>{s.album}</td> */}
                 <td>{s.artist}</td>
             </tr>)
     );
@@ -42,7 +41,9 @@ const Playlist = () => {
     }, [id])
 
     function onClick() {
-        add_playlist_to_spotify(playlist.id)
+        add_playlist_to_spotify(playlist.id).then(res => {
+            setSpotify("Added to your spotify. Go check it out!")
+        });
     }
 
     return (
@@ -60,7 +61,6 @@ const Playlist = () => {
                         <tr>
                             <th></th>
                             <th>Song Name</th>
-                            {/* <th>Album</th> */}
                             <th>Artist</th>
                         </tr>
                         </thead>
@@ -72,7 +72,7 @@ const Playlist = () => {
                 </Col>
                 <Col>
                     <h6>Creators:</h6>
-                    {/* {playlist.users.join(", ")} */}
+                    {playlist.contributors.map(c => c.name).join(", ")}
                     <CommentsForm playlist_id={playlist.id} updatePlaylist={updatePlaylist}/>
                     <Comments comments={playlist.comments} updatePlaylist={updatePlaylist}/>
                 </Col>

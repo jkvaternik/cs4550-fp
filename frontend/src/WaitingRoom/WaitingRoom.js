@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { ch_ready, ch_genres, ch_join, ch_login, ch_leave } from '../socket';
+import { ch_ready, ch_genres, ch_join, ch_login, ch_leave, ch_addUser } from '../socket';
 import { Col, Row } from 'react-bootstrap';
 
 const SPOTIFY_GENRES = [
@@ -188,6 +188,7 @@ const WaitingRoom = ({ session, token }) => {
             let name = encodeURI(playlist);
             console.log(token);
             ch_login(token["access_token"], name);
+            ch_addUser(session.user_id)
         }
       }
 

@@ -1,0 +1,15 @@
+[Unit]
+Description=Rhapsody
+
+[Service]
+Type=simple
+User=rhapsody
+Group=rhapsody
+Restart=on-failure
+Environment=LANG=en_US.UTF-8
+
+WorkingDirectory=/home/rhapsody/rhapsody/server/rhapsody
+ExecStart=/bin/bash /home/rhapsody/rhapsody/server/rhapsody/start.sh
+
+[Install]
+WantedBy=multi-user.target

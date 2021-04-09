@@ -2,6 +2,7 @@ defmodule Rhapsody.Waiting do
     alias Rhapsody.APIRequests
     alias Rhapsody.Playlists
     alias Rhapsody.Tracks
+    alias Rhapsody.Contributors
 
     def new do
         %{
@@ -9,6 +10,7 @@ defmodule Rhapsody.Waiting do
             players_ready: %{},
             game_started: false,
             genres: [],
+            contributors: [],
         }
     end
 
@@ -21,6 +23,7 @@ defmodule Rhapsody.Waiting do
         players_ready: st.players_ready,
         game_started: st.game_started,
         genres: genres,
+        contributors: st.contributors,
 
         }
 
@@ -36,6 +39,7 @@ defmodule Rhapsody.Waiting do
         players_ready: players_ready,
         game_started: st.game_started,
         genres: st.genres,
+        contributors: st.contributors,
 
         }
 
@@ -49,6 +53,7 @@ defmodule Rhapsody.Waiting do
         players_ready: st.players_ready,
         game_started: st.game_started,
         genres: st.genres,
+        contributors: st.contributors,
 
         }
 
@@ -66,7 +71,10 @@ defmodule Rhapsody.Waiting do
             play = Playlists.get_playlist_by_name(st.playlist_name)
             IO.inspect(play)
 
+            IO.inspect(st.contributors)
+
             Enum.each(playlist, fn pl -> Tracks.create_track(%{artist: pl.artist, spotifyID: pl.id, name: pl.name, playlist_id: play.id, track_picture: pl.track_picture}) end)
+            Enum.each(st.contributors, fn c -> Contributors.create_contributor(%{playlist_id: play.id, user_id: c}) end)
         end
 
 
@@ -76,6 +84,7 @@ defmodule Rhapsody.Waiting do
         players_ready: players_ready,
         game_started: game_started,
         genres: st.genres,
+        contributors: st.contributors,
 
         }
 
@@ -91,6 +100,22 @@ defmodule Rhapsody.Waiting do
         players_ready: players_ready,
         game_started: st.game_started,
         genres: st.genres,
+        contributors: st.contributors,
+
+        }
+    end
+
+    def addUser(st, user) do
+
+        contributors = st.contributors ++ [user]
+
+        %{
+
+        playlist_name: st.playlist_name,
+        players_ready: st.players_ready,
+        game_started: st.game_started,
+        genres: st.genres,
+        contributors: contributors
 
         }
     end
@@ -102,6 +127,7 @@ defmodule Rhapsody.Waiting do
         players_ready: st.players_ready,
         game_started: st.game_started,
         genres: st.genres,
+        contributors: st.contributors,
 
         }
     end

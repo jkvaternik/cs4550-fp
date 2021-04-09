@@ -81,6 +81,14 @@ export function ch_notReady() {
     });
 }
 
+export function ch_addUser(user_id) {
+  channel.push("addUser", user_id)
+    .receive("ok", state_update)
+    .receive("error", resp => {
+      console.log("Unable to push", resp)
+    });
+}
+
 export function ch_leave() {
   let channel = socket.channel(`room:1`, {}); 
 

@@ -64,11 +64,6 @@ defmodule RhapsodyWeb.RoomChannel do
     user = socket.assigns[:user]
     name = socket.assigns[:name]
     room = RoomServer.ready(name, user)
-
-    if room.game_started do
-        #need to do something
-        #RoomServer.start_game(game.gamename)
-    end
     view = Waiting.view(room)
     broadcast!(socket, "view", view)
     {:reply, {:ok, view}, socket}
@@ -83,6 +78,15 @@ defmodule RhapsodyWeb.RoomChannel do
       room = RoomServer.not_ready(name, user)
     end
 
+    view = Waiting.view(room)
+    broadcast!(socket, "view", view)
+    {:reply, {:ok, view}, socket}
+  end
+
+    @impl true
+  def handle_in("addUser", user_id, socket) do
+    name = socket.assigns[:name]
+    room = RoomServer.addUser(name, user_id)
     view = Waiting.view(room)
     broadcast!(socket, "view", view)
     {:reply, {:ok, view}, socket}

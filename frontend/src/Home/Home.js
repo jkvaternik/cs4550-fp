@@ -4,15 +4,23 @@ import { connect } from 'react-redux';
 import { Row } from 'react-bootstrap';
 
 import PlaylistCard from './PlaylistCard/PlaylistCard';
-import { load_defaults } from '../api';
-import { ch_login } from '../socket';
+import { fetch_user } from '../api';
+import { ch_login, ch_addUser } from '../socket';
 
-const Home = ({session, token, playlists}) => {
+const Home = ({session, token }) => {
 
   const [playlist, setPlaylist] = useState("");
+  const [playlists, setPlaylists]  = useState([]);
   const history = useHistory();
 
-  useEffect(() => load_defaults(), [])
+
+  useEffect(() => {
+    if (session) {
+      fetch_user(session.user_id).then((res) => {
+        setPlaylists(res.contributors);
+      })
+    }
+  }, [])
 
   if (!session || !token) {
     return (
@@ -25,6 +33,8 @@ const Home = ({session, token, playlists}) => {
   function onClick() {
     if (!(playlist === "")) {
         let name = encodeURI(playlist);
+
+        ch_addUser(session.user_id);
         ch_login(token["access_token"], name);
         history.push("/waiting")
     }
@@ -56,4 +66,4 @@ const Home = ({session, token, playlists}) => {
   );
 }
 
-export default connect(({ session, token, playlists }) => ({ session, token, playlists}))(Home);
+export default connect(({ session, token }) => ({ session, token }))(Home);
