@@ -11,7 +11,6 @@ defmodule RhapsodyWeb.PlaylistController do
     playlists = Playlists.list_playlists()
     |> Enum.map(fn p -> Playlists.load_playlist(p) end)
 
-    IO.puts(inspect(playlists))
     render(conn, "index.json", playlists: playlists)
   end
 

@@ -1,13 +1,11 @@
 import React from 'react'; 
 import { Form, Button } from 'react-bootstrap';
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom';
-import { create_comment, fetch_playlists } from '../../api';
+import { create_comment } from '../../api';
 
 function CommentsForm({playlist_id, updatePlaylist}) { 
 
  const [body, setBody] = useState("");
- const history = useHistory();
 
   function onSubmit(ev) {
     ev.preventDefault();
