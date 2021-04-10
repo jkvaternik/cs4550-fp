@@ -29,7 +29,7 @@ function CommentsForm({playlist_id, updatePlaylist}) {
   
     return (
         <Form onSubmit={onSubmit} >
-            <Form.Label>Comment:</Form.Label>
+            <h6>Comment:</h6>
             <Form.Control name="body"
                             type="text"
                             onChange={(ev) => setBody(ev.target.value)}

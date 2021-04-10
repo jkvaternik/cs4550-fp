@@ -17,30 +17,33 @@ import './App.css';
 
 function App() {
   return (
-    <Container>
+    <>
       <NavigationBar />
-      <h1 style={{ marginTop: '50px', color: '#ffffff' }}>Rhapsody</h1>
-      <Switch>
-        <Route path='/' exact>
-          <Home />
-        </Route>
-        <Route path='/login' exact>
-          <Login />
-        </Route>
-        <Route path='/register' exact>
-          <Register />
-        </Route>
-        <Route path='/auth' exact>
-          <Auth />
-        </Route>
-        <Route path='/waiting' exact>
-          <WaitingRoom />
-        </Route>
-        <Route path='/playlist/:id' exact>
-          <Playlist />
-        </Route>
-      </Switch>
-    </Container>
+      <div style={{minHeight: '100vh', minHeight: '100%'}}>
+        <Container>
+          <Switch>
+            <Route path='/' exact>
+              <Home />
+            </Route>
+            <Route path='/login' exact>
+              <Login />
+            </Route>
+            <Route path='/register' exact>
+              <Register />
+            </Route>
+            <Route path='/auth' exact>
+              <Auth />
+            </Route>
+            <Route path='/waiting' exact>
+              <WaitingRoom />
+            </Route>
+            <Route path='/playlist/:id' exact>
+              <Playlist />
+            </Route>
+          </Switch>
+        </Container>
+      </div>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Nav } from 'react-bootstrap';
+import { Button, Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import store from '../store';
@@ -7,7 +7,7 @@ import store from '../store';
 import Link from './Link/Link';
 
 const NavigationBar = ({ session }) => {
-  
+
   const history = useHistory();
 
   const logout = (ev) => {
@@ -18,16 +18,24 @@ const NavigationBar = ({ session }) => {
   }
 
   return (
-    <Nav>
-      <Link to="/">My Playlists</Link>
-      {/* Add logout conditional rendering */}
-      { session ? 
-      <Button onClick={(ev) => logout(ev)}>
-        Logout
-      </Button> :
-      <Link to="/login" className="btn btn-primary">Login</Link>}
-    </Nav>
+    <Navbar bg="light" variant="light">
+      <Navbar.Brand>Rhapsody</Navbar.Brand>
+      <Nav className="mr-auto">
+        <Link to="/">My Playlists</Link>
+        {session ?
+          null:
+          <Link to="/login" className="btn btn-primary">Login</Link>}
+      </Nav>
+      {session ?
+        <Nav>
+          <Button onClick={(ev) => logout(ev)}>
+            Logout
+      </Button>
+        </Nav>
+        :
+        null}
+    </Navbar>
   )
 }
 
-export default connect(({session}) => ({session}))(NavigationBar);
+export default connect(({ session }) => ({ session }))(NavigationBar);

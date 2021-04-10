@@ -1,3 +1,13 @@
 h1, h2, h3, h4, h5, h6, p {
-  color: #ffffff;
+  color: #52498C;
+}
+
+h2 {
+  font-family: 'Raleway', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  font-style: normal
+}
+
+button {
+  color: #52498C;
 }

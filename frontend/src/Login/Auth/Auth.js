@@ -11,11 +11,10 @@ const Auth = ({ session, token }) => {
 
   useEffect(() => {
     const url = window.location.href;
-    
+
     if (url.includes("?code=")) {
       let code = url.split("?code=")[1];
 
-      // FIX: OAUTH bug — don't let it redirect to home without setting token first
       api_auth(code).then(() => {
         history.push('/');
       });
@@ -25,7 +24,7 @@ const Auth = ({ session, token }) => {
   if (!session) {
     return (
       <section>
-        <h4>Please login to continue</h4>
+        <h4 style={{ textAlign: 'center' }}>Please login to continue.</h4>
       </section>
     )
   }
@@ -37,12 +36,15 @@ const Auth = ({ session, token }) => {
   }
 
   return (
-    <section>
-      <a
-        href={`https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=user-top-read%20playlist-modify-public`}
-      >
-        Login with Spotify
+    <section style={{height: '100vh', marginTop: '200px'}}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <h4 style={{ textAlign: 'center' }}>last step, we need to authorize with Spotify</h4>
+        <a
+          href={`https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=user-top-read%20playlist-modify-public`}
+        >
+          Login with Spotify
       </a>
+      </div>
     </section>
   );
 }
