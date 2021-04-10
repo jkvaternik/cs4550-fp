@@ -50,7 +50,7 @@ config :logger, level: :info
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 config :cors_plug,
-  origin: ["rhapsody.onb6.fun"],
+  origin: ["http://rhapsody.onb6.fun"],
   max_age: 86400,
   methods: ["GET", "POST", "PATCH", "DELETE"],
   headers: ["x-auth", "content-type"]

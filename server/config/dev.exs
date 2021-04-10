@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :rhapsody, Rhapsody.Repo,
   username: "rhapsody",
-  password: "GaEGCwqkvb5xcEuc",
+  password: "ohGae8biet8j",
   database: "rhapsody_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
@@ -68,7 +68,7 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 config :cors_plug,
-  origin: ["http://rhapsody.onb6.fun"],
+  origin: ["http://localhost:3000"],
   max_age: 86400,
   methods: ["GET", "POST", "PATCH", "DELETE"],
   headers: ["x-auth", "content-type"]
