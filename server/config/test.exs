@@ -7,7 +7,7 @@ use Mix.Config
 # Run `mix help test` for more information.
 config :rhapsody, Rhapsody.Repo,
   username: "rhapsody",
-  password: "ohGae8biet8j",
+  password: "GaEGCwqkvb5xcEuc",
   database: "rhapsody_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
