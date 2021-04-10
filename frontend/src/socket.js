@@ -1,8 +1,10 @@
 import { Socket } from "phoenix";
 
+const url = process.env.NODE_ENV === 'production' ? 'ws://rhapsody-backend.onb6.fun/socket' : 'ws://localhost:4000/socket';
+
+
 let socket = new Socket(
-  "ws://localhost:4000/socket",
-  { params: { token: "" } }
+  url, { params: { token: "" } }
 );
 
 socket.connect()
