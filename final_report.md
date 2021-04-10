@@ -36,10 +36,11 @@ Our app is deployed and working wonderfully!
     create the playlist page.
 
 - Jim:
-  - Jim worked on figuring out OAuth and a lot of the backend logic
-    behind getting recommendations, top tracks, and pushing a playlist
-    to spotify. He focused on compiling the top group genres, picking
-    three
+  - Jim worked on figuring out OAuth and a lot of the backend logic behind
+    getting recommendations, top tracks, and pushing a playlist to spotify.
+    He focused on compiling the top group genres, picking two, and combining
+    them with each user's top three artists to get a list of recommendations,
+    and extracting the right data from the API response to create our resources.
 
 - Jaime: 
   - Jaime worked on finalizing OAuth, along with setting up much of
